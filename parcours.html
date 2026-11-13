@@ -1,0 +1,500 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parcours — Mont-Saint-Michel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    :root {
+      --orange-principal: #ea5c0d;
+      --orange-fonce:     #b94503;
+      --orange-clair:     #f7af3e;
+      --gris-fonce:       #333333;
+      --gris-moyen:       #505050;
+      --gris-sombre:      #2a2a2a;
+      --blanc:            #ffffff;
+      --font-titre: 'Oswald', sans-serif;
+      --font-texte: 'Open Sans', sans-serif;
+      --transition: all .3s ease;
+      --panel-w: 400px;
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: var(--font-texte);
+      background: var(--gris-fonce);
+      color: var(--blanc);
+      line-height: 1.6;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    a { text-decoration:none; color:inherit; transition:var(--transition); }
+    img { max-width:100%; display:block; }
+
+    /* ── HEADER ── */
+    .theme-radio {
+      position:absolute; width:1px; height:1px;
+      overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;
+    }
+    .header { z-index:1000; width:100%; flex-shrink:0; }
+    .header-top {
+      background: var(--orange-principal);
+      padding: 14px 40px;
+      display: flex; align-items:center; justify-content:space-between;
+      position:relative;
+    }
+    .logo { display:flex; align-items:center; gap:15px; }
+    .logo-image { width:42px; height:42px; }
+    .site-title { position:absolute; left:50%; transform:translateX(-50%); text-align:center; }
+    .site-title h1 { font-family:var(--font-titre); font-size:1.8rem; font-weight:600; color:#333; letter-spacing:.5px; }
+    .site-title p  { font-size:.85rem; color:#333; }
+    .right-spacer  { width:180px; }
+
+    .lang { position:relative; display:flex; align-items:center; gap:8px; }
+    .lang-toggle { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+    .language-selector { display:flex; align-items:center; gap:6px; color:#333; font-size:.9rem; font-weight:500; cursor:pointer; padding:6px 10px; border-radius:8px; background:rgba(255,255,255,.10); border:2px solid rgba(0,0,0,.12); }
+    .language-selector:hover { background:rgba(255,255,255,.18); }
+    .lang-menu { position:absolute; top:calc(100% + 8px); right:0; min-width:160px; background:rgba(30,30,30,.97); border:1px solid rgba(255,255,255,.12); border-radius:12px; overflow:hidden; box-shadow:0 10px 28px rgba(0,0,0,.35); display:none; z-index:3000; }
+    .lang-menu a { display:block; padding:10px 14px; color:#fff; font-weight:600; }
+    .lang-menu a:hover { background:rgba(234,92,13,.18); }
+    .lang-toggle:checked ~ .lang-menu { display:block; }
+
+    .theme-switch { position:absolute; right:22px; top:14px; display:flex; gap:8px; align-items:center; z-index:2000; }
+    .theme-btn { display:inline-flex; align-items:center; justify-content:center; padding:8px 12px; border-radius:8px; font-weight:700; font-size:.85rem; cursor:pointer; user-select:none; border:2px solid rgba(0,0,0,.25); background:rgba(255,255,255,.18); color:#222; transition:all .2s ease; }
+    .theme-btn:hover { background:rgba(255,255,255,.28); }
+    #theme-default:checked ~ .app .theme-switch label[for="theme-default"],
+    #theme-cb:checked ~ .app .theme-switch label[for="theme-cb"] { background:rgba(0,0,0,.22); color:#fff; border-color:rgba(0,0,0,.35); }
+    #theme-cb:checked ~ .app { --orange-principal:#1F6FEB; --orange-fonce:#0B3D91; --orange-clair:#FFD500; --gris-fonce:#1f1f1f; --gris-moyen:#444; }
+
+    .nav { display:flex; justify-content:center; align-items:center; gap:15px; background:#3d3d3d; padding:12px 40px; }
+    .nav-link { padding:8px 22px; font-weight:500; font-size:.95rem; color:#333; background:var(--orange-clair); border-radius:8px; }
+    .nav-link:hover { background:var(--orange-principal); color:var(--blanc); }
+    .nav-link.active { background:var(--orange-fonce); color:var(--blanc); }
+    .nav-link.no-bg { background:transparent; color:var(--orange-clair); }
+    .nav-link.no-bg:hover { color:var(--blanc); }
+
+    /* ── LAYOUT ── */
+    .layout {
+      flex:1; display:flex; overflow:hidden;
+    }
+
+    /* ── MAP ── */
+    #map { flex:1; height:100%; z-index:1; }
+    .leaflet-tile { filter:brightness(.85) saturate(.65); }
+    .leaflet-popup-content-wrapper { background:var(--gris-sombre) !important; border:2px solid var(--orange-fonce) !important; border-radius:0 !important; box-shadow:0 8px 24px rgba(0,0,0,.6) !important; color:var(--blanc) !important; }
+    .leaflet-popup-tip { background:var(--gris-sombre) !important; }
+    .leaflet-popup-content { margin:14px 18px !important; font-family:var(--font-texte) !important; }
+    .popup-name { font-family:var(--font-titre); font-size:1rem; font-weight:600; margin-bottom:3px; }
+    .popup-dur  { font-size:.72rem; color:var(--orange-clair); font-weight:600; }
+    .leaflet-popup-close-button { color:var(--gris-moyen) !important; }
+    .leaflet-popup-close-button:hover { color:var(--blanc) !important; }
+
+    /* ── PANEL ── */
+    .panel {
+      width: var(--panel-w);
+      height:100%;
+      background: var(--gris-sombre);
+      border-left:2px solid rgba(234,92,13,.2);
+      display:flex; flex-direction:column; overflow:hidden; flex-shrink:0; z-index:10;
+    }
+
+    /* STEP 1 */
+    .step-hours {
+      display:flex; flex-direction:column; height:100%; padding:32px 28px;
+    }
+    .step-eyebrow { font-size:.62rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--orange-principal); margin-bottom:12px; }
+    .step-title { font-family:var(--font-titre); font-size:1.9rem; font-weight:700; line-height:1.1; margin-bottom:10px; }
+    .step-title span { color:var(--orange-clair); }
+    .step-sub { font-size:.85rem; color:rgba(255,255,255,.55); line-height:1.7; margin-bottom:32px; }
+
+    .hour-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-bottom:28px; }
+    .hour-btn {
+      background:var(--gris-moyen); border:2px solid transparent;
+      color:var(--blanc); font-family:var(--font-texte); font-size:.95rem; font-weight:600;
+      padding:16px 8px; cursor:pointer;
+      display:flex; flex-direction:column; align-items:center; gap:3px;
+      transition: border-color .2s, background .2s;
+    }
+    .hour-btn span { font-size:.6rem; font-weight:400; color:rgba(255,255,255,.45); text-transform:uppercase; letter-spacing:.1em; }
+    .hour-btn:hover { border-color:var(--orange-principal); }
+    .hour-btn.selected { background:var(--orange-principal); border-color:var(--orange-principal); }
+    .hour-btn.selected span { color:rgba(255,255,255,.7); }
+
+    .gen-btn {
+      width:100%; padding:15px;
+      background:var(--orange-principal); border:none; color:#fff;
+      font-family:var(--font-texte); font-size:.85rem; font-weight:700;
+      letter-spacing:.16em; text-transform:uppercase;
+      cursor:pointer; transition:background .2s;
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      margin-top:auto;
+    }
+    .gen-btn:hover { background:var(--orange-fonce); }
+    .gen-btn:disabled { background:var(--gris-moyen); color:rgba(255,255,255,.35); cursor:not-allowed; }
+
+    /* STEP 2 */
+    .step-itinerary { display:none; flex-direction:column; height:100%; }
+
+    .itin-header { padding:20px 26px 16px; border-bottom:1px solid rgba(255,255,255,.07); flex-shrink:0; }
+    .itin-header__top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:8px; }
+    .itin-eyebrow { font-size:.6rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--orange-principal); margin-bottom:4px; }
+    .itin-title { font-family:var(--font-titre); font-size:1.4rem; font-weight:700; }
+    .itin-meta { display:flex; gap:16px; margin-top:8px; }
+    .itin-meta-item { font-size:.72rem; color:rgba(255,255,255,.5); }
+    .itin-meta-item strong { color:var(--orange-clair); }
+    .itin-reset { background:none; border:1.5px solid var(--gris-moyen); color:rgba(255,255,255,.5); font-size:.68rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:6px 12px; cursor:pointer; transition:border-color .2s, color .2s; flex-shrink:0; margin-top:2px; }
+    .itin-reset:hover { border-color:var(--orange-principal); color:var(--blanc); }
+
+    /* Timeline */
+    .itin-list { flex:1; overflow-y:auto; padding:16px 0; }
+    .itin-list::-webkit-scrollbar { width:3px; }
+    .itin-list::-webkit-scrollbar-thumb { background:var(--orange-fonce); }
+
+    .itin-item { display:flex; gap:0; padding:0 26px; cursor:pointer; transition:background .15s; }
+    .itin-item:hover { background:rgba(234,92,13,.07); }
+    .itin-item.active { background:rgba(234,92,13,.12); }
+
+    .itin-spine { display:flex; flex-direction:column; align-items:center; width:32px; flex-shrink:0; padding-top:4px; }
+    .itin-dot { width:11px; height:11px; border-radius:50%; background:var(--orange-principal); border:2px solid var(--gris-sombre); flex-shrink:0; z-index:1; transition:transform .2s; }
+    .itin-item.active .itin-dot { transform:scale(1.4); background:var(--orange-clair); }
+    .itin-line { flex:1; width:2px; background:linear-gradient(var(--orange-fonce), rgba(185,69,3,.1)); min-height:18px; }
+    .itin-item:last-child .itin-line { display:none; }
+
+    .itin-content { padding:3px 0 22px 14px; flex:1; min-width:0; }
+    .itin-num  { font-size:.58rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:2px; }
+    .itin-name { font-family:var(--font-titre); font-size:1.05rem; font-weight:600; margin-bottom:4px; line-height:1.2; }
+    .itin-info { display:flex; gap:10px; align-items:center; font-size:.7rem; color:rgba(255,255,255,.5); flex-wrap:wrap; }
+    .itin-time { color:var(--orange-clair); font-weight:600; }
+    .itin-type { background:rgba(255,255,255,.07); padding:2px 8px; font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; }
+
+    .itin-detail { display:none; margin-top:10px; }
+    .itin-item.active .itin-detail { display:block; }
+    .itin-detail img { width:100%; height:120px; object-fit:cover; margin-bottom:9px; filter:brightness(.75); }
+    .itin-detail p { font-size:.78rem; color:rgba(255,255,255,.6); line-height:1.7; margin-bottom:10px; }
+    .itin-sv {
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      background:var(--orange-principal); color:#fff; border:none;
+      font-family:var(--font-texte); font-size:.7rem; font-weight:700;
+      letter-spacing:.14em; text-transform:uppercase;
+      padding:9px 16px; cursor:pointer; transition:background .2s; width:100%;
+    }
+    .itin-sv:hover { background:var(--orange-fonce); }
+
+    /* Progress */
+    .itin-progress { padding:12px 26px; border-top:1px solid rgba(255,255,255,.07); flex-shrink:0; }
+    .prog-label { display:flex; justify-content:space-between; font-size:.68rem; color:rgba(255,255,255,.4); margin-bottom:6px; }
+    .prog-label strong { color:var(--blanc); }
+    .prog-bar { height:3px; background:var(--gris-moyen); }
+    .prog-fill { height:100%; background:linear-gradient(to right, var(--orange-principal), var(--orange-clair)); transition:width .8s cubic-bezier(.22,1,.36,1); }
+
+    /* Street View */
+    .sv-overlay { position:fixed; inset:0; z-index:2000; background:#000; display:none; flex-direction:column; }
+    .sv-overlay.open { display:flex; }
+    .sv-bar { display:flex; align-items:center; justify-content:space-between; padding:14px 28px; background:var(--gris-sombre); border-bottom:2px solid var(--orange-principal); flex-shrink:0; }
+    .sv-bar span { font-family:var(--font-titre); font-size:1rem; font-weight:600; }
+    .sv-close { display:flex; align-items:center; gap:8px; background:none; border:1.5px solid var(--gris-moyen); color:var(--blanc); font-family:var(--font-texte); font-size:.75rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; padding:8px 16px; cursor:pointer; transition:background .2s; }
+    .sv-close:hover { background:var(--orange-fonce); border-color:var(--orange-fonce); }
+    .sv-iframe { flex:1; border:none; }
+
+    /* Mobile */
+    @media(max-width:768px){
+      .layout { flex-direction:column; }
+      .panel { width:100%; height:52%; border-left:none; border-top:2px solid rgba(234,92,13,.25); }
+      #map { flex:1; }
+      .header-top { flex-direction:column; gap:10px; padding:12px 20px; }
+      .site-title { position:static; transform:none; }
+      .right-spacer { display:none; }
+      .nav { flex-wrap:wrap; padding:10px 16px; gap:10px; }
+      .nav-link { padding:7px 14px; font-size:.85rem; }
+      .theme-switch { right:12px; top:10px; }
+    }
+
+        /* ── Correctif RTL : theme-switch passe à gauche ── */
+        [dir="rtl"] .theme-switch {
+            right: auto;
+            left: 22px;
+        }
+
+        @media (max-width: 768px) {
+            [dir="rtl"] .theme-switch {
+                right: auto;
+                left: 12px;
+            }
+        }  </style>
+</head>
+<body data-page="parcours">
+
+<input type="radio" name="theme" id="theme-default" class="theme-radio" checked>
+<input type="radio" name="theme" id="theme-cb" class="theme-radio">
+
+<div class="app" style="display:contents;">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-top">
+      <div class="logo">
+        <svg class="logo-image" viewBox="0 0 100 100" fill="#333333" aria-hidden="true">
+          <path d="M50 10 L55 20 L60 25 L58 30 L62 35 L60 40 L65 42 L63 47 L68 48 L66 53 L70 54 L68 58 L72 59 L70 63 L75 64 L50 70 L25 64 L30 63 L28 59 L32 58 L30 54 L34 53 L32 48 L37 47 L35 42 L40 40 L38 35 L42 30 L40 25 L45 20 Z"/>
+          <rect x="20" y="70" width="60" height="5" fill="#333333"/>
+          <polygon points="50,15 52,18 48,18" fill="var(--orange-principal)"/>
+        </svg>
+        <div class="lang">
+          <input class="lang-toggle" type="checkbox" id="lang-parcours">
+          <label class="language-selector" for="lang-parcours">
+            <span class="lang-current">Français</span>
+            <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true" style="width:12px;height:12px;"><path d="M6 9L1 4h10z"/></svg>
+          </label>
+          <div class="lang-menu" role="menu" aria-label="Choix de langue">
+            <a href="#" role="menuitem" data-set-lang="fr">Français</a>
+            <a href="#" role="menuitem" data-set-lang="en">English</a>
+            <a href="#" role="menuitem" data-set-lang="ar">العربية</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="site-title">
+        <h1 data-i18n="site.title">Le Mont-Saint-Michel</h1>
+        <p data-i18n="site.subtitle">Patrimoine mondial de l'humanité</p>
+      </div>
+
+      <div class="right-spacer" aria-hidden="true"></div>
+
+      <div class="theme-switch" aria-label="Accessibilité daltoniens">
+        <label for="theme-default" class="theme-btn"><span data-i18n="theme.normal">Normal</span></label>
+        <label for="theme-cb" class="theme-btn"><span data-i18n="theme.colorblind">Daltoniens</span></label>
+      </div>
+    </div>
+
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <a href="histoire.html" class="nav-link">Histoire</a>
+      <a href="architecture.html" class="nav-link">Architecture</a>
+      <a href="infos-pratiques.html" class="nav-link">Infos Pratiques</a>
+      <a href="parcours.html" class="nav-link active">Parcours</a>
+    </nav>
+  </header>
+
+  <div class="layout">
+
+    <!-- MAP -->
+    <div id="map"></div>
+
+    <!-- PANEL -->
+    <div class="panel">
+
+      <!-- STEP 1: Sélecteur d'heures -->
+      <div class="step-hours" id="step-hours">
+        <div class="step-eyebrow">Planifier ma visite</div>
+        <h2 class="step-title">Combien de temps<br>avez-vous <span>devant vous ?</span></h2>
+        <p class="step-sub">Choisissez une durée et nous construisons un parcours optimisé selon les incontournables du Mont.</p>
+
+        <div class="hour-grid" id="hour-grid">
+          <button class="hour-btn" data-h="1" onclick="selectHour(1)">1h <span>rapide</span></button>
+          <button class="hour-btn" data-h="2" onclick="selectHour(2)">2h <span>essentiel</span></button>
+          <button class="hour-btn" data-h="3" onclick="selectHour(3)">3h <span>complet</span></button>
+          <button class="hour-btn" data-h="4" onclick="selectHour(4)">4h <span>approfondi</span></button>
+          <button class="hour-btn" data-h="5" onclick="selectHour(5)">5h <span>immersif</span></button>
+          <button class="hour-btn" data-h="6" onclick="selectHour(6)">6h <span>intégral</span></button>
+          <button class="hour-btn" data-h="7" onclick="selectHour(7)">7h <span>journée</span></button>
+          <button class="hour-btn" data-h="8" onclick="selectHour(8)">8h <span>tout voir</span></button>
+          <button class="hour-btn" data-h="9" onclick="selectHour(9)">9h <span>expert</span></button>
+        </div>
+
+        <button class="gen-btn" id="gen-btn" onclick="buildItinerary()" disabled>
+          → Générer mon parcours
+        </button>
+      </div>
+
+      <!-- STEP 2: Itinéraire -->
+      <div class="step-itinerary" id="step-itinerary">
+        <div class="itin-header">
+          <div class="itin-header__top">
+            <div>
+              <div class="itin-eyebrow">Votre parcours</div>
+              <div class="itin-title" id="itin-title">—</div>
+            </div>
+            <button class="itin-reset" onclick="resetItinerary()">↺ Modifier</button>
+          </div>
+          <div class="itin-meta">
+            <div class="itin-meta-item">⏱ <strong id="meta-duration">—</strong> de visite</div>
+            <div class="itin-meta-item">📍 <strong id="meta-stops">—</strong> étapes</div>
+          </div>
+        </div>
+
+        <div class="itin-list" id="itin-list"></div>
+
+        <div class="itin-progress">
+          <div class="prog-label">
+            <span>Temps utilisé</span>
+            <strong id="prog-label-val">0 / 0 min</strong>
+          </div>
+          <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+        </div>
+      </div>
+
+    </div><!-- .panel -->
+  </div><!-- .layout -->
+
+  <!-- STREET VIEW -->
+  <div class="sv-overlay" id="sv-overlay">
+    <div class="sv-bar">
+      <span id="sv-title">Street View</span>
+      <button class="sv-close" onclick="closeSV()">✕ Fermer</button>
+    </div>
+    <iframe class="sv-iframe" id="sv-iframe" src="" allowfullscreen></iframe>
+  </div>
+
+</div><!-- .app -->
+
+<script>
+const PLACES = [
+  { id:1,  priority:3, name:"Chapelle Saint-Aubert",  type:"Monument",      duration:20, lat:48.63654, lng:-1.51320, desc:"Édifice catholique du 12e siècle dédiée à saint Aubert, fondateur de l'abbaye. Classée monument historique depuis 1908.", img:"https://upload.wikimedia.org/wikipedia/commons/c/cc/Chapelle_Saint-Aubert%2C_Mont_Saint-Michel_%28juillet_2015%29.JPG", sv:"https://www.google.com/maps/embed?pb=!4v1655199198389!6m8!1m7!1sfYLCIDSlpNYrHZU2EuFRsA!2m2!1d48.63636001862245!2d-1.513309367291583!3f36.37683932549768!4f15.767057166896592!5f1.1924812503605782" },
+  { id:2,  priority:2, name:"La Tour Gabriel",         type:"Fortification", duration:15, lat:48.63555, lng:-1.51292, desc:"Tour défensive construite en 1524, la plus jeune de l'abbaye. Reconvertie en moulin au XVIIe siècle.", img:"https://cdn.pixabay.com/photo/2016/04/09/12/05/tower-1317954_1280.jpg", sv:"https://www.google.com/maps/embed?pb=!4v1655199148806!6m8!1m7!1sKuzr8f0TKrQWqO6vbL-h1Q!2m2!1d48.6355481340211!2d-1.512753979157253!3f309.32094940965123!4f-0.4121877540006409!5f0.4000000000000002" },
+  { id:3,  priority:3, name:"Entrée du village",       type:"Village",       duration:10, lat:48.63510, lng:-1.51128, desc:"La porte du Roi, plus ancienne porte connue du Mont, autrefois gardée par un pont-levis.", img:"https://i.imgur.com/WZuF4AD.jpg", sv:"https://www.google.com/maps/embed?pb=!4v1655199082953!6m8!1m7!1sLKgRx2jHNZw5S3L4vjr9bA!2m2!1d48.6349107403755!2d-1.511300663438078!3f357.5877745610605!4f18.23381824175752!5f1.1924812503605782" },
+  { id:4,  priority:1, name:"Les Cachots",             type:"Histoire",      duration:25, lat:48.63611, lng:-1.50964, desc:"Prison où 300 prêtres réfractaires furent enfermés. Louis XI y installa des cages de fer.", img:"https://i.imgur.com/T2vkXcf.jpg", sv:"https://www.google.com/maps/embed?pb=!4v1655199040068!6m8!1m7!1sNVDYfnNeoQsCm1ieorGrTA!2m2!1d48.63610979203278!2d-1.509590452260568!3f307.90401326111896!4f17.64794725134395!5f0.4000000000000002" },
+  { id:5,  priority:3, name:"Église Saint-Pierre",     type:"Religion",      duration:20, lat:48.63616, lng:-1.51007, desc:"Sanctuaire de pèlerinage depuis le XIXe siècle. Le cimetière accueille la célèbre Mère Poulard.", img:"https://live.staticflickr.com/2211/32769440562_46208920fd_b.jpg", sv:"https://www.google.com/maps/embed?pb=!4v1655198947246!6m8!1m7!1sEUCgkf1hjO1iKPNTOfbX9w!2m2!1d48.63618023139998!2d-1.510049960007308!3f198.13104756962224!4f10.148395186332621!5f0.4000000000000002" },
+  { id:6,  priority:2, name:"Logis Tiphaine",          type:"Musée",         duration:30, lat:48.63631, lng:-1.51022, desc:"Demeure médiévale de Bertrand Du Guesclin avec meubles authentiques du XIVe siècle.", img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Stone_houses_of_the_medieval_town_%28village%29_%2832080778114%29.jpg/1024px-Stone_houses_of_the_medieval_town_%28village%29_%2832080778114%29.jpg", sv:"https://www.google.com/maps/embed?pb=!4v1655198877723!6m8!1m7!1sqqKP3L6kLTdYol2ZJWa3uw!2m2!1d48.63632178042539!2d-1.510066494526569!3f237.00469931493086!4f29.91013027779158!5f1.1924812503605782" },
+  { id:7,  priority:2, name:"Jardins de l'abbaye",     type:"Nature",        duration:15, lat:48.63661, lng:-1.51055, desc:"Potager et espace de promenade des moines, avec vue apaisante sur la baie.", img:"https://i.imgur.com/Yarx89G.jpg", sv:"https://www.google.com/maps/embed?pb=!4v1655198814344!6m8!1m7!1szAhFXyhYJts_PHTP2TDEIw!2m2!1d48.6365379958815!2d-1.510325359555935!3f260.4970568504929!4f16.288947022564955!5f1.1924812503605782" },
+  { id:8,  priority:2, name:"Tour du Nord & Remparts", type:"Fortification", duration:25, lat:48.63688, lng:-1.51040, desc:"La plus grande tour défensive, bâtie en 1254. Les remparts ont rendu l'abbaye imprenable depuis la Guerre de Cent Ans.", img:"https://i.imgur.com/J5Swk7c.jpg", sv:"https://www.google.com/maps/embed?pb=!4v1655198749714!6m8!1m7!1sa11B6gQyapDB0vKC_7yLcA!2m2!1d48.6368388088701!2d-1.510407887100996!3f183.58109413419112!4f-8.18370535041339!5f1.1924812503605782" },
+  { id:9,  priority:3, name:"La Flèche & Statue dorée",type:"Symbole",       duration:20, lat:48.63639, lng:-1.51155, desc:"L'archange Saint-Michel terrassant le dragon, statue dorée visible à des kilomètres à la ronde.", img:"https://i.imgur.com/NPr1Lzb.jpg", sv:"https://www.google.com/maps/embed?pb=!4v1655198599660!6m8!1m7!1sCAoSLEFGMVFpcFB5dVJNdElScE5XX0thb3FaTXlyMTQ2UVFuOGFNdU1QcjQ1X2dy!2m2!1d48.63577069999999!2d-1.512163!3f59.20082683829788!4f21.887854296426212!5f0.4010512882036798" },
+  { id:10, priority:3, name:"La Merveille",            type:"Abbaye",        duration:45, lat:48.63640, lng:-1.51163, desc:"Chef-d'œuvre de l'architecture gothique, financé par Philippe-Auguste en 1204.", img:"https://i.imgur.com/27fyXk9.jpg", sv:"https://www.google.com/maps/embed?pb=!4v1655198483573!6m8!1m7!1sCAoSLEFGMVFpcE9sWjA5cU8tNUVyaTA4M1dLcmozN2xHVFdabEhLT2htRVRMZTdF!2m2!1d48.6359799!2d-1.5115523!3f69.20784354507654!4f24.377020844885635!5f0.7820865974627469" },
+  { id:11, priority:3, name:"Cloître de l'abbaye",     type:"Abbaye",        duration:30, lat:48.63627, lng:-1.51162, desc:"Cloître aérien aux voûtes élégantes, l'un des plus beaux de France. Jardin et promenade spirituelle.", img:"https://i.imgur.com/sz9svj4.jpg", sv:"https://www.google.com/maps/embed?pb=!4v1655196650107!6m8!1m7!1sCAoSLEFGMVFpcE16amdQaC1DSlJ3T09jQzExeFZYUmtidzBER1V0ZlZiMWdadl9Z!2m2!1d48.6363023!2d-1.5116045!3f154.03811312029706!4f-6.97678046824106!5f0.7820865974627469" }
+];
+
+const SORTED = [...PLACES].sort((a,b) => b.priority - a.priority || a.duration - b.duration);
+
+/* MAP */
+const map = L.map('map', { zoomControl:false }).setView([48.6362, -1.5112], 17);
+L.control.zoom({ position:'bottomright' }).addTo(map);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+function makeIcon(num, state) {
+  const bg = state==='active' ? '#f7af3e' : state==='dimmed' ? '#505050' : '#ea5c0d';
+  return L.divIcon({
+    className:'', iconSize:[34,42], iconAnchor:[17,42], popupAnchor:[0,-44],
+    html:`<div style="width:34px;height:34px;background:${bg};border:3px solid #2a2a2a;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 4px 12px rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;"><span style="transform:rotate(45deg);color:#fff;font-family:'Open Sans',sans-serif;font-size:11px;font-weight:700;">${num}</span></div>`
+  });
+}
+
+const leafletMarkers = {};
+PLACES.forEach((p, i) => {
+  const m = L.marker([p.lat, p.lng], { icon:makeIcon(i+1,'dimmed'), title:p.name })
+    .addTo(map)
+    .bindPopup(`<div class="popup-name">${p.name}</div><div class="popup-dur">⏱ ${p.duration} min estimées</div>`);
+  m.on('click', () => m.openPopup());
+  leafletMarkers[p.id] = m;
+});
+
+/* HOUR SELECTION */
+let selectedHours = null;
+function selectHour(h) {
+  selectedHours = h;
+  document.querySelectorAll('.hour-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelector(`[data-h="${h}"]`).classList.add('selected');
+  document.getElementById('gen-btn').disabled = false;
+}
+
+/* ITINERARY */
+let itinerary = [];
+function buildItinerary() {
+  const budget = selectedHours * 60;
+  let remaining = budget;
+  itinerary = [];
+  for (const place of SORTED) {
+    const cost = place.duration + (itinerary.length > 0 ? 5 : 0);
+    if (remaining >= cost) { itinerary.push(place); remaining -= cost; }
+  }
+  showItinerary(budget);
+}
+
+function showItinerary(budget) {
+  const usedMin = itinerary.reduce((s,p) => s+p.duration, 0) + Math.max(0,(itinerary.length-1)*5);
+  const hrs = Math.floor(usedMin/60), mins = usedMin%60;
+  const labels = {1:"Visite rapide",2:"L'essentiel",3:"Visite complète",4:"Visite approfondie",5:"Immersion totale",6:"La journée",7:"Grand tour",8:"Tout voir",9:"L'expérience ultime"};
+  document.getElementById('itin-title').textContent = labels[selectedHours] || `${selectedHours}h de visite`;
+  document.getElementById('meta-duration').textContent = hrs > 0 ? `${hrs}h${mins > 0 ? mins : ''}` : `${mins} min`;
+  document.getElementById('meta-stops').textContent = itinerary.length;
+  document.getElementById('prog-label-val').textContent = `${usedMin} / ${budget} min`;
+  setTimeout(() => { document.getElementById('prog-fill').style.width = Math.min(100,(usedMin/budget*100))+'%'; }, 80);
+
+  const list = document.getElementById('itin-list');
+  list.innerHTML = '';
+  itinerary.forEach((p,i) => {
+    const el = document.createElement('div');
+    el.className = 'itin-item'; el.dataset.id = p.id;
+    el.innerHTML = `
+      <div class="itin-spine"><div class="itin-dot"></div><div class="itin-line"></div></div>
+      <div class="itin-content">
+        <div class="itin-num">Étape ${i+1}</div>
+        <div class="itin-name">${p.name}</div>
+        <div class="itin-info"><span class="itin-time">⏱ ${p.duration} min</span><span class="itin-type">${p.type}</span></div>
+        <div class="itin-detail">
+          <img src="${p.img}" alt="${p.name}" loading="lazy">
+          <p>${p.desc}</p>
+          <button class="itin-sv" onclick="openSV('${p.sv}','${p.name.replace(/'/g,"\\'")}')">📷 Street View</button>
+        </div>
+      </div>`;
+    el.addEventListener('click', () => activateItem(p.id));
+    list.appendChild(el);
+  });
+
+  PLACES.forEach(p => {
+    const inIt = itinerary.find(x => x.id === p.id);
+    leafletMarkers[p.id].setIcon(makeIcon(inIt ? itinerary.indexOf(inIt)+1 : '', inIt ? 'normal' : 'dimmed'));
+  });
+
+  if (window._poly) map.removeLayer(window._poly);
+  window._poly = L.polyline(itinerary.map(p => [p.lat,p.lng]), { color:'#ea5c0d', weight:3, opacity:.7, dashArray:'8,6' }).addTo(map);
+  map.fitBounds(window._poly.getBounds(), { padding:[50,50] });
+
+  document.getElementById('step-hours').style.display = 'none';
+  document.getElementById('step-itinerary').style.display = 'flex';
+}
+
+function activateItem(id) {
+  document.querySelectorAll('.itin-item').forEach(el => {
+    const pid = parseInt(el.dataset.id);
+    const isThis = pid === id;
+    el.classList.toggle('active', isThis);
+    const inIt = itinerary.find(x => x.id === pid);
+    if (inIt) leafletMarkers[pid].setIcon(makeIcon(itinerary.indexOf(inIt)+1, isThis?'active':'normal'));
+  });
+  const place = PLACES.find(p => p.id === id);
+  if (place) { map.flyTo([place.lat,place.lng], 18, {duration:.8}); leafletMarkers[id].openPopup(); }
+}
+
+function resetItinerary() {
+  if (window._poly) { map.removeLayer(window._poly); window._poly = null; }
+  PLACES.forEach((p,i) => leafletMarkers[p.id].setIcon(makeIcon(i+1,'dimmed')));
+  document.getElementById('step-itinerary').style.display = 'none';
+  document.getElementById('step-hours').style.display = 'flex';
+  document.getElementById('prog-fill').style.width = '0%';
+  map.setView([48.6362,-1.5112], 17);
+}
+
+function openSV(url, name) {
+  document.getElementById('sv-iframe').src = url;
+  document.getElementById('sv-title').textContent = name + ' — Street View';
+  document.getElementById('sv-overlay').classList.add('open');
+}
+function closeSV() {
+  document.getElementById('sv-overlay').classList.remove('open');
+  document.getElementById('sv-iframe').src = '';
+}
+</script>
+    <script src="i18n.js"></script>
+</body>
+</html>
+
+

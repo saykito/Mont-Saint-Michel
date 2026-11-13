@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture — Mont-Saint-Michel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --orange-principal:#ea5c0d; --orange-fonce:#b94503; --orange-clair:#f7af3e; --gris-fonce:#333333; --gris-moyen:#505050; --blanc:#ffffff; --font-titre:'Oswald',sans-serif; --font-texte:'Open Sans',sans-serif; --transition:all .3s ease; }
+        *{margin:0;padding:0;box-sizing:border-box} html{scroll-behavior:smooth}
+        body{font-family:var(--font-texte);background:var(--gris-fonce);color:var(--blanc);line-height:1.6;overflow-x:hidden}
+        a{text-decoration:none;color:inherit;transition:var(--transition)} img{max-width:100%;display:block}
+        /* Header */
+        .theme-radio{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+        .header{position:sticky;top:0;z-index:1000;width:100%}
+        .header-top{background:var(--orange-principal);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;position:relative}
+        .logo{display:flex;align-items:center;gap:15px} .logo-image{width:50px;height:50px}
+        .site-title{position:absolute;left:50%;transform:translateX(-50%);text-align:center}
+        .site-title h1{font-family:var(--font-titre);font-size:2.2rem;font-weight:600;color:#333;letter-spacing:.5px}
+        .site-title p{font-size:.95rem;color:#333} .right-spacer{width:180px}
+        .lang{position:relative;display:inline-flex;align-items:center}
+        .lang-btn{display:flex;align-items:center;gap:6px;color:#333;font-size:1rem;font-weight:500;cursor:pointer;padding:6px 8px;border-radius:8px;background:none;border:none}
+        .lang-btn svg{width:12px;height:12px;fill:currentColor}
+        .lang-menu{position:absolute;top:calc(100% + 10px);left:0;background:#fff;color:#333;border-radius:12px;padding:10px;min-width:170px;box-shadow:0 12px 30px rgba(0,0,0,.25);display:none;z-index:3000}
+        .lang-menu a{display:block;padding:10px 12px;border-radius:10px;font-weight:600;color:#333}
+        .lang-menu a:hover{background:rgba(0,0,0,.06)} .lang:focus-within .lang-menu,.lang:hover .lang-menu{display:block}
+        .theme-switch{position:absolute;right:22px;top:22px;display:flex;gap:10px;align-items:center;z-index:2000}
+        .theme-btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:10px;font-weight:700;font-size:.95rem;cursor:pointer;user-select:none;border:2px solid rgba(0,0,0,.25);background:rgba(255,255,255,.18);color:#222;transition:all .2s}
+        [dir="rtl"] .theme-switch{right:auto;left:22px}
+        .nav{display:flex;justify-content:center;align-items:center;gap:15px;background:#3d3d3d;padding:15px 40px}
+        .nav-link{padding:10px 25px;font-weight:500;font-size:1rem;color:#333;background:var(--orange-clair);border-radius:8px}
+        .nav-link:hover{background:var(--orange-principal);color:var(--blanc)} .nav-link.no-bg{background:transparent;color:var(--orange-clair)}
+        .nav-link.active{background:var(--orange-fonce);color:var(--blanc)}
+        #theme-default:checked~.app .theme-switch label[for="theme-default"],#theme-cb:checked~.app .theme-switch label[for="theme-cb"]{background:rgba(0,0,0,.22);color:#fff;border-color:rgba(0,0,0,.35)}
+        #theme-cb:checked~.app{--orange-principal:#1F6FEB;--orange-fonce:#0B3D91;--orange-clair:#FFD500;--gris-fonce:#1f1f1f;--gris-moyen:#444}
+        /* Contenu */
+        .container{max-width:1200px;margin:0 auto;padding:0 24px}
+        .page-hero{padding:60px 0 40px;text-align:center}
+        .page-hero .tag{display:inline-block;background:var(--orange-principal);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:4px 14px;margin-bottom:16px}
+        .page-hero h2{font-family:var(--font-titre);font-size:clamp(2rem,5vw,3.5rem);font-weight:700;margin-bottom:12px}
+        .page-hero p{color:rgba(255,255,255,.6);font-size:1rem;max-width:540px;margin:0 auto}
+        /* Grille composantes */
+        .section-title{font-family:var(--font-titre);font-size:1.6rem;font-weight:600;color:var(--orange-clair);margin:48px 0 24px;padding-bottom:10px;border-bottom:2px solid rgba(247,175,62,.2)}
+        .composantes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;margin-bottom:60px}
+        .comp-card{position:relative;border-radius:16px;overflow:hidden;height:300px;transition:transform .3s,box-shadow .3s;box-shadow:0 8px 20px rgba(0,0,0,.4);display:block;color:var(--blanc)}
+        .comp-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(234,92,13,.3)}
+        .comp-card img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+        .comp-card:hover img{transform:scale(1.05)}
+        .comp-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.4) 60%,transparent 100%)}
+        .comp-card-body{position:absolute;bottom:0;left:0;right:0;padding:24px}
+        .comp-card-kicker{font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange-principal);margin-bottom:5px}
+        .comp-card-title{font-family:var(--font-titre);font-size:1.3rem;font-weight:600}
+        .comp-card-arrow{position:absolute;top:20px;right:20px;width:36px;height:36px;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:background .2s}
+        .comp-card:hover .comp-card-arrow{background:var(--orange-principal)}
+        .comp-card-placeholder{width:100%;height:100%;background:linear-gradient(135deg,#2a2a2a,#1e1e1e);display:flex;align-items:center;justify-content:center;font-size:3.5rem;color:rgba(255,255,255,.15)}
+        .badge-new{position:absolute;top:14px;left:14px;background:var(--orange-principal);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px}
+        .admin-add-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:rgba(234,92,13,.15);border:1px solid rgba(234,92,13,.3);border-radius:8px;color:var(--orange-clair);font-size:.85rem;font-weight:600;margin-bottom:20px;transition:background .2s}
+        .admin-add-btn:hover{background:rgba(234,92,13,.3)}
+        @media(max-width:768px){.header-top{flex-direction:column;gap:12px;padding:15px 20px}.site-title{position:static;transform:none}.right-spacer{display:none}.theme-switch{right:12px;top:12px}[dir="rtl"] .theme-switch{right:auto;left:12px}.nav{flex-wrap:wrap;padding:12px 20px}.nav-link{padding:8px 16px;font-size:.9rem}}
+    </style>
+</head>
+<body data-page="archi">
+
+<input type="radio" name="theme" id="theme-default" class="theme-radio" checked>
+<input type="radio" name="theme" id="theme-cb" class="theme-radio">
+
+<div class="app">
+    <header class="header">
+        <div class="header-top">
+            <div class="logo">
+                <svg class="logo-image" viewBox="0 0 100 100" fill="#333333" aria-hidden="true">
+                    <path d="M50 10 L55 20 L60 25 L58 30 L62 35 L60 40 L65 42 L63 47 L68 48 L66 53 L70 54 L68 58 L72 59 L70 63 L75 64 L50 70 L25 64 L30 63 L28 59 L32 58 L30 54 L34 53 L32 48 L37 47 L35 42 L40 40 L38 35 L42 30 L40 25 L45 20 Z"/>
+                    <rect x="20" y="70" width="60" height="5" fill="#333333"/>
+                    <polygon points="50,15 52,18 48,18" fill="#ea5c0d"/>
+                </svg>
+                <div class="lang">
+                    <button class="lang-btn" type="button">
+                        <span class="lang-current">Français</span>
+                        <svg viewBox="0 0 12 12"><path d="M6 9L1 4h10z"/></svg>
+                    </button>
+                    <div class="lang-menu" role="menu">
+                        <a href="#" data-set-lang="fr">Français</a>
+                        <a href="#" data-set-lang="en">English</a>
+                        <a href="#" data-set-lang="ar">العربية</a>
+                    </div>
+                </div>
+            </div>
+            <div class="site-title">
+                <h1 data-i18n="site.title">Le Mont-Saint-Michel</h1>
+                <p data-i18n="site.subtitle">Patrimoine mondial de l'humanité</p>
+            </div>
+            <div class="right-spacer" aria-hidden="true"></div>
+            <div class="theme-switch">
+                <label for="theme-default" class="theme-btn" data-i18n="theme.normal">Normal</label>
+                <label for="theme-cb" class="theme-btn" data-i18n="theme.colorblind">Daltoniens</label>
+            </div>
+        </div>
+        <nav class="nav">
+            <a href="index.html" class="nav-link" data-i18n="nav.home">Accueil</a>
+            <a href="histoire.html" class="nav-link" data-i18n="nav.history">Histoire</a>
+            <a href="architecture.html" class="nav-link active" data-i18n="nav.architecture">Architecture</a>
+            <a href="infos-pratiques.html" class="nav-link" data-i18n="nav.practical">Infos Pratiques</a>
+            <a href="parcours.html" class="nav-link no-bg" data-i18n="nav.route">Parcours</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="page-hero">
+            <span class="tag">Chef-d'œuvre · Médiéval</span>
+            <h2>Architecture</h2>
+            <p>Un chef-d'œuvre de l'architecture médiévale, du roman au gothique flamboyant.</p>
+        </div>
+
+        <!-- Composantes existantes (statiques) -->
+        <div class="section-title">Les grandes composantes</div>
+
+        <div class="composantes-grid">
+            <a href="architecture-abbatiale.html" class="comp-card">
+                <img src="pique.jpg" alt="L&#x27;abbatiale">
+                <div class="comp-card-overlay"></div>
+                <div class="comp-card-body">
+                    <div class="comp-card-kicker">Sommet • Cœur spirituel</div>
+                    <div class="comp-card-title">L&#x27;abbatiale</div>
+                </div>
+                <div class="comp-card-arrow">→</div>
+            </a>
+            <a href="architecture-cloitre.html" class="comp-card">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Saint-Michel%2C_Cloister.JPG" alt="Le cloître">
+                <div class="comp-card-overlay"></div>
+                <div class="comp-card-body">
+                    <div class="comp-card-kicker">La Merveille • Méditation</div>
+                    <div class="comp-card-title">Le cloître</div>
+                </div>
+                <div class="comp-card-arrow">→</div>
+            </a>
+            <a href="architecture-refectoire.html" class="comp-card">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_interior_of_the_refectory_of_the_Abbey_of_Mont-Saint-Michel.jpg" alt="Le réfectoire">
+                <div class="comp-card-overlay"></div>
+                <div class="comp-card-body">
+                    <div class="comp-card-kicker">La Merveille • Vie quotidienne</div>
+                    <div class="comp-card-title">Le réfectoire</div>
+                </div>
+                <div class="comp-card-arrow">→</div>
+            </a>
+            <a href="architecture-salle-chevaliers.html" class="comp-card">
+                <img src="chevalier.jpg" alt="Salle des Chevaliers">
+                <div class="comp-card-overlay"></div>
+                <div class="comp-card-body">
+                    <div class="comp-card-kicker">La Merveille • Travail &amp; accueil</div>
+                    <div class="comp-card-title">Salle des Chevaliers</div>
+                </div>
+                <div class="comp-card-arrow">→</div>
+            </a>
+            <a href="architecture-cryptes.html" class="comp-card">
+                <img src="cryptes.webp" alt="Cryptes &amp; chapelles basses">
+                <div class="comp-card-overlay"></div>
+                <div class="comp-card-body">
+                    <div class="comp-card-kicker">Fondations • Soutènement</div>
+                    <div class="comp-card-title">Cryptes &amp; chapelles basses</div>
+                </div>
+                <div class="comp-card-arrow">→</div>
+            </a>
+            <a href="architecture-remparts.html" class="comp-card">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Saint-Michel_vu_du_ciel.jpg" alt="Remparts &amp; tours">
+                <div class="comp-card-overlay"></div>
+                <div class="comp-card-body">
+                    <div class="comp-card-kicker">Défense • Forteresse</div>
+                    <div class="comp-card-title">Remparts &amp; tours</div>
+                </div>
+                <div class="comp-card-arrow">→</div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script src="i18n.js"></script>
+</body>
+</html>

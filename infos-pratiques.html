@@ -1,0 +1,902 @@
+﻿<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Infos pratiques — Mont-Saint-Michel</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&amp;family=Open+Sans:wght@300;400;600&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --orange-principal: #ea5c0d;
+            --orange-fonce: #b94503;
+            --orange-clair: #f7af3e;
+            --gris-fonce: #333333;
+            --gris-moyen: #505050;
+            --blanc: #ffffff;
+            --font-titre: 'Oswald', sans-serif;
+            --font-texte: 'Open Sans', sans-serif;
+            --transition: all 0.3s ease;
+
+            --max: 1200px;
+            --shadow: 0 14px 30px rgba(0, 0, 0, .40);
+            --r-xl: 20px;
+            --r-lg: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--font-texte);
+            background: var(--gris-fonce);
+            color: var(--blanc);
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+            height: auto;
+        }
+
+        .container {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== BANNIÈRE IDENTIQUE ===== */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-top {
+            background-color: var(--orange-principal);
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-image {
+            width: 50px;
+            height: 50px;
+        }
+
+        .language-selector {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #333333;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .language-selector svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .site-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        .site-title h1 {
+            font-family: var(--font-titre);
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #333333;
+            margin: 0 0 2px;
+            letter-spacing: .5px;
+        }
+
+        .site-title p {
+            margin: 0;
+            font-size: .95rem;
+            color: #333333;
+            font-weight: 400;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            background-color: #3d3d3d;
+            padding: 15px 40px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            padding: 10px 25px;
+            font-weight: 500;
+            font-size: 1rem;
+            color: #333333;
+            background-color: var(--orange-clair);
+            border-radius: 8px;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            background-color: var(--orange-principal);
+            color: var(--blanc);
+        }
+
+        .nav-link.no-bg {
+            background-color: transparent;
+            color: var(--orange-clair);
+        }
+
+        .nav-link.no-bg:hover {
+            color: var(--blanc);
+        }
+
+        /* ===== HERO ===== */
+        .page-hero {
+            padding: 46px 0 12px;
+        }
+
+        .page-hero h2 {
+            font-family: var(--font-titre);
+            font-size: 3rem;
+            letter-spacing: .5px;
+            margin: 0 0 10px;
+            font-weight: 700;
+        }
+
+        .page-hero h2 span {
+            color: var(--orange-principal);
+        }
+
+        .page-hero p {
+            margin: 0;
+            max-width: 860px;
+            color: rgba(255, 255, 255, .75);
+            font-size: 1.05rem;
+        }
+
+        /* ===== VISUEL ===== */
+        .banner {
+            margin-top: 22px;
+            border-radius: var(--r-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            position: relative;
+            background: #222;
+        }
+
+        .banner img {
+            width: 100%;
+            height: 360px;
+            object-fit: cover;
+        }
+
+        .banner .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, .86) 0%, rgba(0, 0, 0, .40) 55%, rgba(0, 0, 0, .10) 100%);
+        }
+
+        .banner .box {
+            position: absolute;
+            left: 22px;
+            right: 22px;
+            bottom: 18px;
+            max-width: 920px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--orange-principal);
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: .9rem;
+            margin-bottom: 10px;
+        }
+
+        .banner h3 {
+            font-family: var(--font-titre);
+            margin: 0 0 6px;
+            font-size: 2rem;
+            letter-spacing: .4px;
+        }
+
+        .banner p {
+            margin: 0;
+            color: rgba(255, 255, 255, .82);
+        }
+
+        /* ===== LAYOUT ===== */
+        .section {
+            padding: 34px 0 70px;
+        }
+
+        .section-title {
+            font-family: var(--font-titre);
+            font-size: 2.2rem;
+            color: var(--orange-principal);
+            margin: 0 0 18px;
+            font-style: italic;
+            letter-spacing: .5px;
+        }
+
+        .muted {
+            color: rgba(255, 255, 255, .70);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            margin-top: 22px;
+        }
+
+        .card {
+            background: #2f2f2f;
+            border-radius: var(--r-xl);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, .07);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 36px rgba(234, 92, 13, .25);
+        }
+
+        .card .head {
+            padding: 16px 16px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background: rgba(234, 92, 13, .18);
+            color: var(--orange-clair);
+            font-size: 18px;
+            flex: 0 0 auto;
+        }
+
+        .card h4 {
+            font-family: var(--font-titre);
+            font-size: 1.6rem;
+            margin: 0;
+            letter-spacing: .2px;
+        }
+
+        .card .body {
+            padding: 10px 16px 18px;
+            color: rgba(255, 255, 255, .78);
+            font-size: 1rem;
+        }
+
+        .card ul {
+            margin: 10px 0 0;
+            padding-left: 18px;
+        }
+
+        .card li {
+            margin: 7px 0;
+        }
+
+        /* ===== Bandeau alerte (marées / sécurité) ===== */
+        .alert {
+            margin-top: 18px;
+            background: #3a3a3a;
+            border-radius: var(--r-xl);
+            box-shadow: var(--shadow);
+            padding: 18px 18px;
+            border-left: 6px solid rgba(247, 175, 62, .75);
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .alert .bubble {
+            width: 40px;
+            height: 40px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background: rgba(247, 175, 62, .18);
+            color: var(--orange-clair);
+            font-weight: 700;
+            flex: 0 0 auto;
+        }
+
+        .alert h4 {
+            font-family: var(--font-titre);
+            margin: 0 0 6px;
+            color: var(--orange-clair);
+            font-size: 1.55rem;
+        }
+
+        .alert p {
+            margin: 0;
+            color: rgba(255, 255, 255, .75);
+        }
+
+        /* ===== FAQ (sans JS) ===== */
+        details {
+            margin-top: 14px;
+            background: #2f2f2f;
+            border-radius: var(--r-xl);
+            box-shadow: var(--shadow);
+            padding: 14px 16px;
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        summary {
+            cursor: pointer;
+            list-style: none;
+            font-family: var(--font-titre);
+            font-size: 1.35rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .plus {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            background: rgba(234, 92, 13, .18);
+            color: var(--orange-clair);
+            font-weight: 800;
+        }
+
+        details p {
+            margin: 10px 0 0;
+            color: rgba(255, 255, 255, .74);
+            line-height: 1.75;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            margin-top: 40px;
+            background: #1a1a1a;
+            border-top: 4px solid var(--orange-principal);
+            padding: 26px 0;
+            color: #bdbdbd;
+            font-size: .95rem;
+        }
+
+        @media (max-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .banner img {
+                height: 320px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                gap: 12px;
+                padding: 15px 20px;
+            }
+
+            .site-title {
+                position: static;
+                transform: none;
+            }
+
+            .site-title h1 {
+                font-size: 1.6rem;
+            }
+
+            .nav {
+                padding: 12px 20px;
+            }
+
+            .nav-link {
+                font-size: .95rem;
+                padding: 9px 18px;
+            }
+
+            .page-hero h2 {
+                font-size: 2.2rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .banner img {
+                height: 260px;
+            }
+        }
+
+        /* === Accessibilité (sans JS) : Daltoniens + menu langue === */
+        .theme-radio {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+        }
+
+        .theme-switch {
+            position: absolute;
+            right: 22px;
+            top: 18px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .theme-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: .95rem;
+            cursor: pointer;
+            user-select: none;
+            border: 2px solid rgba(0, 0, 0, .25);
+            background: rgba(255, 255, 255, .18);
+            color: #222;
+            transition: all .2s ease;
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-1px);
+            background: rgba(255, 255, 255, .28);
+        }
+
+        #theme-default:checked~.app .theme-switch label[for="theme-default"],
+        #theme-cb:checked~.app .theme-switch label[for="theme-cb"] {
+            background: rgba(0, 0, 0, .22);
+            color: #fff;
+            border-color: rgba(0, 0, 0, .35);
+        }
+
+        #theme-cb:checked~.app {
+            --orange-principal: #1F6FEB;
+            --orange-fonce: #0B3D91;
+            --orange-clair: #FFD500;
+            --gris-fonce: #1f1f1f;
+            --gris-moyen: #444444;
+            --blanc: #ffffff;
+        }
+
+        #theme-cb:checked~.app a:focus,
+        #theme-cb:checked~.app button:focus,
+        #theme-cb:checked~.app label:focus {
+            outline: 3px solid var(--orange-clair);
+            outline-offset: 3px;
+        }
+
+        .lang {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lang-toggle {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+        }
+
+        .language-selector {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #333;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 10px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .10);
+            border: 2px solid rgba(0, 0, 0, .12);
+        }
+
+        .language-selector:hover {
+            background: rgba(255, 255, 255, .18);
+        }
+
+        .lang-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            min-width: 180px;
+            background: rgba(30, 30, 30, .96);
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .35);
+            display: none;
+            z-index: 3000;
+        }
+
+        .lang-menu a {
+            display: block;
+            padding: 12px 14px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .lang-menu a:hover {
+            background: rgba(234, 92, 13, .18);
+        }
+
+        .lang-toggle:checked~.lang-menu {
+            display: block;
+        }
+
+        .header,
+        header {
+            width: 100%;
+        }
+
+        .header-top {
+            width: 100%;
+            margin: 0;
+        }
+
+        @media (max-width:768px) {
+            .theme-switch {
+                right: 12px;
+                top: 12px;
+                gap: 8px;
+            }
+
+            .theme-btn {
+                padding: 8px 10px;
+                font-size: .9rem;
+            }
+
+            .lang-menu {
+                right: 0;
+            }
+        }
+
+        /* ── Correctif RTL : theme-switch passe à gauche ── */
+        [dir="rtl"] .theme-switch {
+            right: auto;
+            left: 22px;
+        }
+
+        @media (max-width: 768px) {
+            [dir="rtl"] .theme-switch {
+                right: auto;
+                left: 12px;
+            }
+        }    </style>
+</head>
+
+<body data-page="infos"><input checked="" class="theme-radio" id="theme-default" name="theme" type="radio" />
+    <input class="theme-radio" id="theme-cb" name="theme" type="radio" />
+
+
+
+
+
+    <div class="app">
+        <header class="header">
+            <div class="header-top">
+                <div class="logo">
+                    <svg aria-hidden="true" class="logo-image" fill="#333333" viewBox="0 0 100 100">
+                        <path
+                            d="M50 10 L55 20 L60 25 L58 30 L62 35 L60 40 L65 42 L63 47 L68 48 L66 53 L70 54 L68 58 L72 59 L70 63 L75 64 L50 70 L25 64 L30 63 L28 59 L32 58 L30 54 L34 53 L32 48 L37 47 L35 42 L40 40 L38 35 L42 30 L40 25 L45 20 Z">
+                        </path>
+                        <rect fill="#333333" height="5" width="60" x="20" y="70"></rect>
+                        <polygon fill="var(--orange-principal)" points="50,15 52,18 48,18"></polygon>
+                    </svg>
+                    <div class="lang">
+                        <input class="lang-toggle" id="lang-toggle-infos-pratiques-fr" type="checkbox" />
+                        <label class="language-selector" for="lang-toggle-infos-pratiques-fr">
+                            <span class="lang-current">Français</span>
+                            <svg aria-hidden="true" fill="currentColor" style="width:12px;height:12px;"
+                                viewBox="0 0 12 12">
+                                <path d="M6 9L1 4h10z"></path>
+                            </svg>
+                        </label>
+                        <div aria-label="Choix de langue" class="lang-menu" role="menu">
+                            <a href="#" role="menuitem" data-set-lang="fr">Français</a>
+                            <a href="#" role="menuitem" data-set-lang="en">English</a>
+                            <a href="#" role="menuitem" data-set-lang="ar">العربية</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="site-title">
+                    <h1 data-i18n="site.title">Le Mont-Saint-Michel</h1>
+                    <p data-i18n="site.subtitle">Patrimoine mondial de l'humanité</p>
+                </div>
+                <div aria-hidden="true" class="right-spacer"></div>
+                <div aria-label="Accessibilité daltoniens" class="theme-switch">
+                    <label class="theme-btn" for="theme-default"><span data-i18n="theme.normal">Normal</span></label>
+                    <label class="theme-btn" for="theme-cb"><span data-i18n="theme.colorblind">Daltoniens</span></label>
+                </div>
+            </div>
+            <nav aria-label="Navigation principale" class="nav"><a class="nav-link" href="index.html" data-nav="index" data-i18n="nav.home">Accueil</a><a
+                    class="nav-link" href="histoire.html">Histoire</a><a class="nav-link"
+                    href="architecture.html">Architecture</a><a class="nav-link" href="infos-pratiques.html" data-nav="infos" data-i18n="nav.practical">Infos Pratiques</a><a class="nav-link no-bg" href="parcours.html" data-nav="parcours" data-i18n="nav.route">Parcours</a></nav>
+        </header>
+        <!-- BANNIÈRE IDENTIQUE -->
+        <main class="container">
+            <section class="page-hero">
+                <h2>Infos <span>pratiques</span></h2>
+                <p>
+                    Tout ce qu’il faut pour organiser ta visite : accès, déplacements, conseils marées,
+                    familles, services, et surtout <b>accessibilité</b>.
+                </p>
+                <div class="banner">
+                    <img alt="Baie du Mont-Saint-Michel" src="baie.jpg" />
+                    <div class="overlay"></div>
+                    <div class="box">
+                        <div class="badge">Bien préparer sa venue</div>
+                        <h3>Visite plus sereine = meilleure expérience</h3>
+                        <p>Anticiper l’accès, la météo et la fatigue (beaucoup de pentes et de marches) change vraiment
+                            la
+                            visite.</p>
+                    </div>
+                </div>
+            </section>
+            <section aria-label="Informations essentielles" class="section">
+                <h3 class="section-title">Essentiels avant de partir</h3>
+                <p class="muted">Une base claire, simple, et utile (sans surcharge).</p>
+                <div class="grid">
+                    <article class="card">
+                        <div class="head">
+                            <div>
+                                <h4>Accès &amp; arrivée</h4>
+                            </div>
+                            <div class="icon">🧭</div>
+                        </div>
+                        <div class="body">
+                            <ul>
+                                <li>Parkings sur le continent (puis accès vers le Mont).</li>
+                                <li>Navettes régulières vers la zone de dépose (puis marche jusqu’aux remparts).</li>
+                                <li>Possibilité de faire une partie à pied si tu veux profiter de la baie.</li>
+                            </ul>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <div class="head">
+                            <div>
+                                <h4>Durée conseillée</h4>
+                            </div>
+                            <div class="icon">⏱️</div>
+                        </div>
+                        <div class="body">
+                            <ul>
+                                <li>Village + remparts : 1h30 à 2h.</li>
+                                <li>Abbaye (visite complète) : 1h à 1h30.</li>
+                                <li>Prévois plus si tu veux faire des pauses photo / boutiques.</li>
+                            </ul>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <div class="head">
+                            <div>
+                                <h4>Meilleur moment</h4>
+                            </div>
+                            <div class="icon">📸</div>
+                        </div>
+                        <div class="body">
+                            <ul>
+                                <li>Très tôt le matin ou en fin d’après-midi : moins de monde.</li>
+                                <li>En semaine plutôt que week-end.</li>
+                                <li>Grandes marées : spectacle incroyable (si tu restes prudent).</li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+                <div aria-label="Conseils de sécurité marées" class="alert" role="note">
+                    <div class="bubble">🌊</div>
+                    <div>
+                        <h4>Marées &amp; sécurité</h4>
+                        <p>
+                            La baie évolue vite : montée des eaux, sables, chenaux. Pour une traversée dans la baie,
+                            privilégie un guide et prépare une tenue adaptée (météo changeante).
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section aria-label="Accessibilité" class="section">
+                <h3 class="section-title">Accessibilité (handicap / PMR)</h3>
+                <p class="muted">
+                    Le Mont est magnifique mais physiquement exigeant : pentes, pavés, marches et passages étroits.
+                    L’objectif ici : te donner des repères pratiques pour anticiper.
+                </p>
+                <div class="grid">
+                    <article class="card">
+                        <div class="head">
+                            <div>
+                                <h4>Mobilité réduite</h4>
+                            </div>
+                            <div class="icon">♿</div>
+                        </div>
+                        <div class="body">
+                            <ul>
+                                <li>Accès PMR : plutôt concentré sur certaines zones (selon la fatigue et l’itinéraire).
+                                </li>
+                                <li>Beaucoup d’escaliers : l’abbaye peut être très difficile (voire impossible) en
+                                    fauteuil
+                                    selon le parcours.</li>
+                                <li>Renseigne-toi sur les aides possibles (ex : joëlette selon disponibilité,
+                                    accompagnement).</li>
+                            </ul>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <div class="head">
+                            <div>
+                                <h4>Déficience auditive</h4>
+                            </div>
+                            <div class="icon">🦻</div>
+                        </div>
+                        <div class="body">
+                            <ul>
+                                <li>Privilégie les supports écrits/visuels.</li>
+                                <li>Visites guidées : demande si une adaptation est possible.</li>
+                                <li>Prépare ton itinéraire à l’avance (repères, points d’arrêt).</li>
+                            </ul>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <div class="head">
+                            <div>
+                                <h4>Déficience visuelle</h4>
+                            </div>
+                            <div class="icon">👁️</div>
+                        </div>
+                        <div class="body">
+                            <ul>
+                                <li>Sol irrégulier : pavés, marches, seuils (prudence).</li>
+                                <li>Préférer les créneaux moins chargés (moins de bousculade).</li>
+                                <li>Les chiens guides / assistance sont généralement admis (selon règles des lieux).
+                                </li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+                <details>
+                    <summary>Conseils “PMR” concrets pour mieux vivre la visite <span class="plus">+</span></summary>
+                    <p>
+                        Arrive tôt, fais des pauses fréquentes, repère les zones plus “planes” (au pied et autour des
+                        remparts),
+                        et limite l’objectif : mieux vaut profiter de 2-3 points forts que “tout faire” et se fatiguer.
+                    </p>
+                </details>
+            </section>
+            <section aria-label="Familles et services" class="section">
+                <h3 class="section-title">Familles &amp; services</h3>
+                <div class="grid">
+                    <article class="card">
+                        <div class="head">
+                            <div>
+                                <h4>Avec poussette</h4>
+                            </div>
+                            <div class="icon">👶</div>
+                        </div>
+                        <div class="body">
+                            <ul>
+                                <li>Pavés + marches : souvent plus simple avec porte-bébé.</li>
+                                <li>Si poussette : privilégie les zones basses et itinéraires plus larges.</li>
+                                <li>Prends de l’eau : montée + foule = fatigue rapide.</li>
+                            </ul>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <div class="head">
+                            <div>
+                                <h4>Se restaurer</h4>
+                            </div>
+                            <div class="icon">🍽️</div>
+                        </div>
+                        <div class="body">
+                            <ul>
+                                <li>Restaurants et snacks dans le village.</li>
+                                <li>Heures pleines : souvent beaucoup d’attente.</li>
+                                <li>Astuce : déjeuner tôt / tard pour éviter la file.</li>
+                            </ul>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <div class="head">
+                            <div>
+                                <h4>À emporter</h4>
+                            </div>
+                            <div class="icon">🎒</div>
+                        </div>
+                        <div class="body">
+                            <ul>
+                                <li>Chaussures confortables (pavés + marches).</li>
+                                <li>Veste coupe-vent (la baie est souvent ventée).</li>
+                                <li>Batterie téléphone (photos + plan).</li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+                <details>
+                    <summary>FAQ : la visite est-elle “sportive” ? <span class="plus">+</span></summary>
+                    <p>
+                        Oui : il y a des montées, des marches et des zones étroites. Même sans faire l’abbaye,
+                        le village + remparts demande de l’énergie. Prends ton temps.
+                    </p>
+                </details>
+                <details>
+                    <summary>FAQ : peut-on se promener autour du Mont ? <span class="plus">+</span></summary>
+                    <p>
+                        Oui, mais la baie est un milieu naturel : renseigne-toi sur les marées, la météo, et reste sur
+                        des
+                        parcours sûrs.
+                        Pour une traversée complète, un guide est la meilleure option.
+                    </p>
+                </details>
+            </section>
+        </main>
+        <footer class="footer">
+            <div class="container">
+                © Projet UNESCO — Mont-Saint-Michel • Page Infos pratiques
+            </div>
+        </footer>
+    </div>
+    <script src="i18n.js"></script>
+</body>
+
+</html>
+

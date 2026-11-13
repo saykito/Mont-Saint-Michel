@@ -1,0 +1,580 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salle des Chevaliers — Mont-Saint-Michel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --orange-principal: #ea5c0d;
+      --orange-fonce: #b94503;
+      --orange-clair: #f7af3e;
+      --gris-fonce: #333333;
+      --gris-moyen: #505050;
+      --blanc: #ffffff;
+      --font-titre: 'Oswald', sans-serif;
+      --font-texte: 'Open Sans', sans-serif;
+      --transition: all .3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-texte);
+      background: var(--gris-fonce);
+      color: var(--blanc);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition);
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* nav/buttons baseline (in case file lacks) */
+    .nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      background: #3d3d3d;
+      padding: 15px 40px;
+    }
+
+    .nav-link {
+      padding: 10px 25px;
+      font-weight: 500;
+      font-size: 1rem;
+      color: #333;
+      background: var(--orange-clair);
+      border-radius: 8px;
+    }
+
+    .nav-link:hover {
+      background: var(--orange-principal);
+      color: var(--blanc);
+    }
+
+    .nav-link.no-bg {
+      background: transparent;
+      color: var(--orange-clair);
+    }
+
+    .nav-link.no-bg:hover {
+      color: var(--blanc);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-image {
+      width: 50px;
+      height: 50px;
+    }
+
+    .site-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+
+    .site-title h1 {
+      font-family: var(--font-titre);
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 2px;
+      letter-spacing: .5px;
+    }
+
+    .site-title p {
+      font-size: .95rem;
+      color: #333;
+    }
+
+    .right-spacer {
+      width: 180px;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-top {
+      background: var(--orange-principal);
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    /* Page detail */
+    .page-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 18px 0 26px;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gris-moyen);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    .btn-back:hover {
+      background: rgba(234, 92, 13, .25);
+      color: var(--orange-clair);
+    }
+
+    .hero {
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, .45);
+      margin-bottom: 28px;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+    }
+
+    .h-title {
+      font-family: var(--font-titre);
+      font-size: 3rem;
+      letter-spacing: .5px;
+      margin-bottom: 10px;
+    }
+
+    .kicker {
+      color: var(--orange-clair);
+      font-weight: 700;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      font-size: .9rem;
+      margin-bottom: 10px;
+    }
+
+    .lead {
+      font-size: 1.15rem;
+      color: #f2f2f2;
+      opacity: .92;
+      max-width: 85ch;
+      margin-bottom: 26px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 26px;
+      align-items: start;
+    }
+
+    .card {
+      background: #2f2f2f;
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 18px;
+      padding: 18px 18px 14px;
+    }
+
+    .card h3 {
+      font-family: var(--font-titre);
+      font-size: 1.4rem;
+      color: var(--orange-principal);
+      margin-bottom: 8px;
+    }
+
+    .card p,
+    .card li {
+      color: #eaeaea;
+      opacity: .92;
+    }
+
+    .card ul {
+      padding-left: 18px;
+      margin: 8px 0 0;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .gallery img {
+      height: 170px;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+
+    .section {
+      margin-top: 22px;
+    }
+
+    .section h3 {
+      font-family: var(--font-titre);
+      font-size: 1.8rem;
+      color: var(--orange-principal);
+      margin: 18px 0 10px;
+    }
+
+    .section p {
+      font-size: 1.05rem;
+      color: #e9e9e9;
+      opacity: .92;
+    }
+
+    @media (max-width:900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero img {
+        height: 320px;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width:600px) {
+      .header-top {
+        flex-direction: column;
+        gap: 12px;
+        padding: 15px 20px;
+      }
+
+      .site-title {
+        position: static;
+        transform: none;
+      }
+
+      .right-spacer {
+        display: none;
+      }
+
+      .nav {
+        flex-wrap: wrap;
+        padding: 12px 20px;
+      }
+
+      .nav-link {
+        padding: 8px 16px;
+        font-size: .95rem;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* === Accessibilité (sans JS) : Daltoniens + menu langue === */
+    .theme-radio {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    .theme-switch {
+      position: absolute;
+      right: 22px;
+      top: 18px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .theme-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: .95rem;
+      cursor: pointer;
+      user-select: none;
+      border: 2px solid rgba(0, 0, 0, .25);
+      background: rgba(255, 255, 255, .18);
+      color: #222;
+      transition: all .2s ease;
+    }
+
+    .theme-btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, .28);
+    }
+
+    #theme-default:checked~.app .theme-switch label[for="theme-default"],
+    #theme-cb:checked~.app .theme-switch label[for="theme-cb"] {
+      background: rgba(0, 0, 0, .22);
+      color: #fff;
+      border-color: rgba(0, 0, 0, .35);
+    }
+
+    #theme-cb:checked~.app {
+      --orange-principal: #1F6FEB;
+      --orange-fonce: #0B3D91;
+      --orange-clair: #FFD500;
+      --gris-fonce: #1f1f1f;
+      --gris-moyen: #444444;
+      --blanc: #ffffff;
+    }
+
+    #theme-cb:checked~.app a:focus,
+    #theme-cb:checked~.app button:focus,
+    #theme-cb:checked~.app label:focus {
+      outline: 3px solid var(--orange-clair);
+      outline-offset: 3px;
+    }
+
+    .lang {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lang-toggle {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    .language-selector {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #333;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .10);
+      border: 2px solid rgba(0, 0, 0, .12);
+    }
+
+    .language-selector:hover {
+      background: rgba(255, 255, 255, .18);
+    }
+
+    .lang-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      min-width: 180px;
+      background: rgba(30, 30, 30, .96);
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .35);
+      display: none;
+      z-index: 3000;
+    }
+
+    .lang-menu a {
+      display: block;
+      padding: 12px 14px;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .lang-menu a:hover {
+      background: rgba(234, 92, 13, .18);
+    }
+
+    .lang-toggle:checked~.lang-menu {
+      display: block;
+    }
+
+    .header,
+    header {
+      width: 100%;
+    }
+
+    .header-top {
+      width: 100%;
+      margin: 0;
+    }
+
+    @media (max-width:768px) {
+      .theme-switch {
+        right: 12px;
+        top: 12px;
+        gap: 8px;
+      }
+
+      .theme-btn {
+        padding: 8px 10px;
+        font-size: .9rem;
+      }
+
+      .lang-menu {
+        right: 0;
+      }
+    }
+
+        /* ── Correctif RTL : theme-switch passe à gauche ── */
+        [dir="rtl"] .theme-switch {
+            right: auto;
+            left: 22px;
+        }
+
+        @media (max-width: 768px) {
+            [dir="rtl"] .theme-switch {
+                right: auto;
+                left: 12px;
+            }
+        }  </style>
+</head>
+
+<body>
+  <input type="radio" name="theme" id="theme-default" class="theme-radio" checked>
+  <input type="radio" name="theme" id="theme-cb" class="theme-radio">
+  <div class="app">
+
+    <header class="header">
+      <div class="header-top">
+        <div class="logo">
+          <svg class="logo-image" viewBox="0 0 100 100" fill="#333333" aria-hidden="true">
+            <path
+              d="M50 10 L55 20 L60 25 L58 30 L62 35 L60 40 L65 42 L63 47 L68 48 L66 53 L70 54 L68 58 L72 59 L70 63 L75 64 L50 70 L25 64 L30 63 L28 59 L32 58 L30 54 L34 53 L32 48 L37 47 L35 42 L40 40 L38 35 L42 30 L40 25 L45 20 Z" />
+            <rect x="20" y="70" width="60" height="5" fill="#333333" />
+            <polygon points="50,15 52,18 48,18" fill="var(--orange-principal)" />
+          </svg>
+
+          <div class="lang">
+            <input class="lang-toggle" type="checkbox" id="lang-toggle-architecture-fr">
+            <label class="language-selector" for="lang-toggle-architecture-fr">
+              <span>Français</span>
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true" style="width:12px;height:12px;">
+                <path d="M6 9L1 4h10z" />
+              </svg>
+            </label>
+            <div aria-label="Choix de langue" class="lang-menu" role="menu">
+              <a href="index.html" role="menuitem">Français</a>
+              <a href="#" data-set-lang="en" role="menuitem">English</a>
+              <a href="#" data-set-lang="ar" role="menuitem">العربية</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="site-title">
+          <h1>Le Mont-Saint-Michel</h1>
+          <p>Patrimoine mondial de l'humanité</p>
+        </div>
+
+        <div class="right-spacer" aria-hidden="true"></div>
+
+        <div class="theme-switch" aria-label="Accessibilité daltoniens">
+          <label for="theme-default" class="theme-btn">Normal</label>
+          <label for="theme-cb" class="theme-btn">Daltoniens</label>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Navigation principale"><a href="index.html" class="nav-link">Accueil</a><a
+          href="histoire.html" class="nav-link">Histoire</a><a href="architecture.html"
+          class="nav-link">Architecture</a><a href="infos-pratiques.html" class="nav-link">Infos Pratiques</a><a
+          href="#" class="nav-link no-bg">Parcours</a></nav>
+    </header>
+
+    <main class="page-wrap">
+      <div class="breadcrumb">
+        <a class="btn-back" href="architecture.html">← Retour</a>
+      </div>
+
+      <div class="hero">
+        <img src="chevalier.jpg" alt="Salle des Chevaliers">
+      </div>
+
+      <div class="kicker">La Merveille • Travail & accueil</div>
+      <h2 class="h-title">Salle des Chevaliers</h2>
+      <p class="lead">Grande salle voûtée de La Merveille : espace polyvalent, parfois associé au scriptorium ou à des
+        activités de gestion et d’accueil.</p>
+
+      <div class="grid">
+        <div>
+          <div class="section">
+            <h3>Fonction</h3>
+            <p>Selon les périodes, la salle a pu accueillir du travail (écriture, administration), des hôtes ou des
+              activités liées à la gestion du Mont et de ses ressources.</p>
+          </div>
+          <div class="section">
+            <h3>Architecture</h3>
+            <p>Le rythme des colonnes et des travées crée une impression de force et d’ordre. La pierre, omniprésente,
+              renforce l’austérité monastique.</p>
+          </div>
+          <div class="section">
+            <h3>Détails à observer</h3>
+            <p>La répétition des supports, la hauteur sous voûte et l’effet de perspective : chaque travée guide le
+              regard vers le fond de la salle.</p>
+          </div>
+        </div>
+
+        <aside class="card">
+          <h3>À retenir</h3>
+          <p>Une salle emblématique de la Merveille.</p>
+          <ul>
+            <li>Voûtes sur croisées d’ogives</li>
+            <li>Colonnes massives et régulières</li>
+            <li>Grande capacité d’accueil</li>
+            <li>Cœur fonctionnel du monastère médiéval</li>
+          </ul>
+          <div class="gallery">
+            <img src="chevalier.jpg" alt=""><img
+              src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Saint-Michel_vu_du_ciel.jpg" alt=""><img
+              src="cryptes.webp" alt="">
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+</body>
+
+</html>

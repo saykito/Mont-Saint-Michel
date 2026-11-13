@@ -1,0 +1,1090 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visite Virtuelle — Mont-Saint-Michel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --orange-principal: #ea5c0d;
+      --orange-fonce: #b94503;
+      --orange-clair: #f7af3e;
+      --gris-fonce: #333333;
+      --gris-moyen: #505050;
+      --blanc: #ffffff;
+      --font-titre: 'Oswald', sans-serif;
+      --font-texte: 'Open Sans', sans-serif;
+      --transition: all .3s ease;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-texte);
+      background: var(--gris-fonce);
+      color: var(--blanc);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition);
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* ── HEADER (identique au site) ── */
+    .theme-radio {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+    }
+
+    .header-top {
+      background: var(--orange-principal);
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-image {
+      width: 50px;
+      height: 50px;
+    }
+
+    .site-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+
+    .site-title h1 {
+      font-family: var(--font-titre);
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 2px;
+      letter-spacing: .5px;
+    }
+
+    .site-title p {
+      font-size: .95rem;
+      color: #333;
+    }
+
+    .right-spacer {
+      width: 180px;
+    }
+
+    /* Lang */
+    .lang {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lang-toggle {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    .language-selector {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #333;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .10);
+      border: 2px solid rgba(0, 0, 0, .12);
+    }
+
+    .language-selector:hover {
+      background: rgba(255, 255, 255, .18);
+    }
+
+    .lang-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      min-width: 180px;
+      background: rgba(30, 30, 30, .96);
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .35);
+      display: none;
+      z-index: 3000;
+    }
+
+    .lang-menu a {
+      display: block;
+      padding: 12px 14px;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .lang-menu a:hover {
+      background: rgba(234, 92, 13, .18);
+    }
+
+    .lang-toggle:checked~.lang-menu {
+      display: block;
+    }
+
+    /* Theme switch */
+    .theme-switch {
+      position: absolute;
+      right: 22px;
+      top: 18px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .theme-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: .95rem;
+      cursor: pointer;
+      user-select: none;
+      border: 2px solid rgba(0, 0, 0, .25);
+      background: rgba(255, 255, 255, .18);
+      color: #222;
+      transition: all .2s ease;
+    }
+
+    .theme-btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, .28);
+    }
+
+    #theme-default:checked~.app .theme-switch label[for="theme-default"],
+    #theme-cb:checked~.app .theme-switch label[for="theme-cb"] {
+      background: rgba(0, 0, 0, .22);
+      color: #fff;
+      border-color: rgba(0, 0, 0, .35);
+    }
+
+    #theme-cb:checked~.app {
+      --orange-principal: #1F6FEB;
+      --orange-fonce: #0B3D91;
+      --orange-clair: #FFD500;
+      --gris-fonce: #1f1f1f;
+      --gris-moyen: #444444;
+    }
+
+    /* Nav */
+    .nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      background: #3d3d3d;
+      padding: 15px 40px;
+    }
+
+    .nav-link {
+      padding: 10px 25px;
+      font-weight: 500;
+      font-size: 1rem;
+      color: #333;
+      background: var(--orange-clair);
+      border-radius: 8px;
+    }
+
+    .nav-link:hover {
+      background: var(--orange-principal);
+      color: var(--blanc);
+    }
+
+    .nav-link.no-bg {
+      background: transparent;
+      color: var(--orange-clair);
+    }
+
+    .nav-link.no-bg:hover {
+      color: var(--blanc);
+    }
+
+    /* ── HERO VIDEO ── */
+    .vr-hero {
+      position: relative;
+      height: 480px;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .vr-hero video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .5;
+      filter: brightness(.8);
+    }
+
+    .vr-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 30%, var(--gris-fonce) 100%);
+      pointer-events: none;
+    }
+
+    .vr-hero__text {
+      position: absolute;
+      bottom: 60px;
+      left: 60px;
+      z-index: 2;
+    }
+
+    .vr-hero__tag {
+      display: inline-block;
+      background: var(--orange-principal);
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      margin-bottom: 14px;
+    }
+
+    .vr-hero__title {
+      font-family: var(--font-titre);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: .5px;
+      color: var(--blanc);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .vr-hero__title span {
+      color: var(--orange-clair);
+    }
+
+    .vr-hero__sub {
+      font-size: .95rem;
+      color: rgba(255, 255, 255, .75);
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    /* ── SECTION TITLE ── */
+    .section-bar {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 48px 60px 24px;
+    }
+
+    .section-bar h2 {
+      font-family: var(--font-titre);
+      font-size: 1.9rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .section-bar h2 span {
+      color: var(--orange-principal);
+    }
+
+    .section-bar__line {
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(to right, var(--orange-fonce), transparent);
+    }
+
+    .section-bar__count {
+      font-size: .8rem;
+      color: rgba(255, 255, 255, .4);
+      white-space: nowrap;
+      letter-spacing: .12em;
+    }
+
+    /* ── GRID ── */
+    .vr-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 3px;
+      padding: 0 3px 3px;
+    }
+
+    .vr-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+      background: var(--gris-moyen);
+    }
+
+    .vr-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s ease, filter .5s ease;
+      filter: brightness(.6) saturate(.7);
+    }
+
+    .vr-card:hover img {
+      transform: scale(1.06);
+      filter: brightness(.4) saturate(1);
+    }
+
+    /* orange underline on hover */
+    .vr-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--orange-principal);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .35s ease;
+      z-index: 3;
+    }
+
+    .vr-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .vr-card__body {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 22px;
+      background: linear-gradient(to top, rgba(42, 42, 42, .95) 0%, transparent 65%);
+    }
+
+    .vr-card__num {
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      color: var(--orange-principal);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .vr-card__name {
+      font-family: var(--font-titre);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--blanc);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .vr-card__desc {
+      font-size: .78rem;
+      color: rgba(255, 255, 255, .6);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .3s, transform .3s;
+    }
+
+    .vr-card:hover .vr-card__desc {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .vr-card__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      background: var(--orange-principal);
+      color: #fff;
+      border: none;
+      font-family: var(--font-texte);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 9px 18px;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .3s .05s, transform .3s .05s, background .2s;
+    }
+
+    .vr-card:hover .vr-card__btn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .vr-card__btn:hover {
+      background: var(--orange-fonce);
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 20, 20, .88);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s ease;
+      backdrop-filter: blur(6px);
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: #2a2a2a;
+      width: min(92vw, 900px);
+      max-height: 88vh;
+      overflow-y: auto;
+      border-top: 3px solid var(--orange-principal);
+      animation: modalIn .35s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    @keyframes modalIn {
+      from {
+        transform: translateY(28px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 26px 34px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, .07);
+    }
+
+    .modal__num {
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      color: var(--orange-principal);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .modal__title {
+      font-family: var(--font-titre);
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .modal__controls {
+      display: flex;
+      gap: 8px;
+    }
+
+    .modal__ctrl {
+      width: 38px;
+      height: 38px;
+      background: none;
+      border: 1.5px solid var(--gris-moyen);
+      color: var(--blanc);
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color .2s, background .2s;
+    }
+
+    .modal__ctrl:hover {
+      border-color: var(--orange-principal);
+      background: var(--orange-principal);
+    }
+
+    .modal__close {
+      width: 38px;
+      height: 38px;
+      background: none;
+      border: 1.5px solid var(--gris-moyen);
+      color: var(--blanc);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 4px;
+      transition: border-color .2s, background .2s;
+    }
+
+    .modal__close:hover {
+      border-color: #c0392b;
+      background: #c0392b;
+    }
+
+    .modal__body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    @media(max-width:640px) {
+      .modal__body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .modal__images {
+      position: relative;
+      background: #111;
+      min-height: 260px;
+    }
+
+    .modal__images img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+      animation: fadeImg .4s ease;
+    }
+
+    @keyframes fadeImg {
+      from {
+        opacity: 0
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    .modal__images img.active {
+      display: block;
+    }
+
+    .img-dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+
+    .img-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .3);
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .img-dot.active {
+      background: var(--orange-principal);
+    }
+
+    .modal__info {
+      padding: 30px 34px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal__desc {
+      font-size: .88rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, .75);
+      flex: 1;
+    }
+
+    .modal__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, .07);
+    }
+
+    .modal__sv {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--orange-principal);
+      color: #fff;
+      border: none;
+      font-family: var(--font-texte);
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 12px 22px;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .modal__sv:hover {
+      background: var(--orange-fonce);
+    }
+
+    .modal__wiki {
+      color: var(--orange-clair);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .modal__wiki:hover {
+      color: var(--blanc);
+    }
+
+    /* ── STREET VIEW ── */
+    .sv-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      background: #000;
+      display: none;
+      flex-direction: column;
+    }
+
+    .sv-overlay.open {
+      display: flex;
+    }
+
+    .sv-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 32px;
+      background: #2a2a2a;
+      border-bottom: 2px solid var(--orange-principal);
+      flex-shrink: 0;
+    }
+
+    .sv-bar span {
+      font-family: var(--font-titre);
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .sv-close {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: 1.5px solid var(--gris-moyen);
+      color: var(--blanc);
+      font-family: var(--font-texte);
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .sv-close:hover {
+      background: var(--orange-fonce);
+      border-color: var(--orange-fonce);
+    }
+
+    .sv-iframe {
+      flex: 1;
+      border: none;
+    }
+
+    /* footer */
+    .vr-footer {
+      padding: 28px 60px;
+      border-top: 1px solid rgba(255, 255, 255, .07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: rgba(255, 255, 255, .35);
+      font-size: .75rem;
+      margin-top: 60px;
+    }
+
+    .vr-footer a {
+      color: var(--orange-principal);
+    }
+
+    .vr-footer a:hover {
+      color: var(--blanc);
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--orange-fonce);
+    }
+
+    @media(max-width:768px) {
+      .vr-hero {
+        height: 320px;
+      }
+
+      .vr-hero__text {
+        left: 24px;
+        bottom: 32px;
+      }
+
+      .section-bar {
+        padding: 32px 20px 16px;
+      }
+
+      .vr-footer {
+        flex-direction: column;
+        gap: 8px;
+        padding: 24px 20px;
+      }
+
+      .nav {
+        flex-wrap: wrap;
+        padding: 12px 20px;
+      }
+
+      .nav-link {
+        padding: 8px 16px;
+        font-size: .9rem;
+      }
+
+      .header-top {
+        flex-direction: column;
+        gap: 12px;
+        padding: 15px 20px;
+      }
+
+      .site-title {
+        position: static;
+        transform: none;
+      }
+
+      .right-spacer {
+        display: none;
+      }
+
+      .theme-switch {
+        right: 12px;
+        top: 12px;
+      }
+    }
+
+        /* ── Correctif RTL : theme-switch passe à gauche ── */
+        [dir="rtl"] .theme-switch {
+            right: auto;
+            left: 22px;
+        }
+
+        @media (max-width: 768px) {
+            [dir="rtl"] .theme-switch {
+                right: auto;
+                left: 12px;
+            }
+        }  </style>
+</head>
+
+<body data-page="vv">
+
+  <input type="radio" name="theme" id="theme-default" class="theme-radio" checked>
+  <input type="radio" name="theme" id="theme-cb" class="theme-radio">
+
+  <div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-top">
+        <div class="logo">
+          <svg class="logo-image" viewBox="0 0 100 100" fill="#333333" aria-hidden="true">
+            <path
+              d="M50 10 L55 20 L60 25 L58 30 L62 35 L60 40 L65 42 L63 47 L68 48 L66 53 L70 54 L68 58 L72 59 L70 63 L75 64 L50 70 L25 64 L30 63 L28 59 L32 58 L30 54 L34 53 L32 48 L37 47 L35 42 L40 40 L38 35 L42 30 L40 25 L45 20 Z" />
+            <rect x="20" y="70" width="60" height="5" fill="#333333" />
+            <polygon points="50,15 52,18 48,18" fill="var(--orange-principal)" />
+          </svg>
+          <div class="lang">
+            <input class="lang-toggle" type="checkbox" id="lang-vv">
+            <label class="language-selector" for="lang-vv">
+              <span class="lang-current">Français</span>
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true" style="width:12px;height:12px;">
+                <path d="M6 9L1 4h10z" />
+              </svg>
+            </label>
+            <div class="lang-menu" role="menu" aria-label="Choix de langue">
+              <a href="#" role="menuitem" data-set-lang="fr">Français</a>
+              <a href="#" role="menuitem" data-set-lang="en">English</a>
+              <a href="#" role="menuitem" data-set-lang="ar">العربية</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="site-title">
+          <h1 data-i18n="site.title">Le Mont-Saint-Michel</h1>
+          <p data-i18n="site.subtitle">Patrimoine mondial de l'humanité</p>
+        </div>
+
+        <div class="right-spacer" aria-hidden="true"></div>
+
+        <div class="theme-switch" aria-label="Accessibilité daltoniens">
+          <label for="theme-default" class="theme-btn"><span data-i18n="theme.normal">Normal</span></label>
+          <label for="theme-cb" class="theme-btn"><span data-i18n="theme.colorblind">Daltoniens</span></label>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Navigation principale">
+        <a href="index.html" class="nav-link">Accueil</a>
+        <a href="histoire.html" class="nav-link">Histoire</a>
+        <a href="architecture.html" class="nav-link">Architecture</a>
+        <a href="infos-pratiques.html" class="nav-link">Infos Pratiques</a>
+        <a href="parcours.html" class="nav-link no-bg">Parcours</a>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="vr-hero">
+      <video autoplay muted loop playsinline poster="https://cdn.arnocellarier.fr/s/iut/msm/vv/1080/photo%20(1).webp">
+        <source src="mont.mp4" type="video/mp4">
+      </video>
+      <div class="vr-hero__text">
+        <span class="vr-hero__tag">Visite virtuelle · UNESCO</span>
+        <h2 class="vr-hero__title">Survolez le<br><span>Mont-Saint-Michel</span></h2>
+        <p class="vr-hero__sub">Explorez 11 lieux emblématiques à travers panoramas 360° et anecdotes historiques.</p>
+      </div>
+    </section>
+
+    <!-- SECTION TITLE -->
+    <div class="section-bar">
+      <h2>Les <span>lieux</span> à visiter</h2>
+      <div class="section-bar__line"></div>
+      <span class="section-bar__count">11 ÉTAPES</span>
+    </div>
+
+    <!-- GRID -->
+    <div class="vr-grid" id="js-grid"></div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="js-modal-overlay" role="dialog" aria-modal="true">
+      <div class="modal">
+        <div class="modal__header">
+          <div>
+            <div class="modal__num" id="js-modal-num"></div>
+            <h2 class="modal__title" id="js-modal-title"></h2>
+          </div>
+          <div class="modal__controls">
+            <button class="modal__ctrl" onclick="navigate(-1)" title="Précédent">&#8592;</button>
+            <button class="modal__ctrl" onclick="navigate(1)" title="Suivant">&#8594;</button>
+            <button class="modal__close" onclick="closeModal()" title="Fermer">&#215;</button>
+          </div>
+        </div>
+        <div class="modal__body">
+          <div class="modal__images" id="js-modal-images">
+            <div class="img-dots" id="js-img-dots"></div>
+          </div>
+          <div class="modal__info">
+            <p class="modal__desc" id="js-modal-desc"></p>
+            <div class="modal__footer">
+              <button class="modal__sv" id="js-sv-btn">&#128247; Street View</button>
+              <a class="modal__wiki" id="js-wiki-link" target="_blank">En savoir +</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STREET VIEW -->
+    <div class="sv-overlay" id="js-sv-overlay">
+      <div class="sv-bar">
+        <span id="js-sv-title">Street View</span>
+        <button class="sv-close" onclick="closeSV()">&#215; Fermer</button>
+      </div>
+      <iframe class="sv-iframe" id="js-sv-iframe" src="" allowfullscreen loading="lazy"></iframe>
+    </div>
+
+    <footer class="vr-footer">
+      <span>&copy; Images Google Earth Studio · Landsat / Copernicus</span>
+      <a href="index.html">← Retour à l'accueil</a>
+    </footer>
+
+  </div><!-- .app -->
+
+  <script>
+    const LOCATIONS = [
+      { name: "Chapelle Saint-Aubert", desc: "La chapelle Saint-Aubert est un édifice catholique du 12e siècle, à la base de l'îlot, au nord-ouest. Dédiée à saint Aubert, évêque d'Avranches et fondateur de l'abbaye. Classée monument historique depuis le 15 février 1908.", images: ["https://upload.wikimedia.org/wikipedia/commons/c/cc/Chapelle_Saint-Aubert%2C_Mont_Saint-Michel_%28juillet_2015%29.JPG"], link: "https://fr.wikipedia.org/wiki/Chapelle_Saint-Aubert_du_Mont-Saint-Michel", sv: "https://www.google.com/maps/embed?pb=!4v1655199198389!6m8!1m7!1sfYLCIDSlpNYrHZU2EuFRsA!2m2!1d48.63636001862245!2d-1.513309367291583!3f36.37683932549768!4f15.767057166896592!5f1.1924812503605782" },
+      { name: "La Tour Gabriel", desc: "Tour défensive construite en 1524 sur ordre du Lieutenant Gabriel du Puy, la plus jeune de l'abbaye. Dotée de canons pour protéger le côté ouest. Reconvertie en moulin au XVIIe siècle.", images: ["https://cdn.pixabay.com/photo/2016/04/09/12/05/tower-1317954_1280.jpg", "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Tour_St._Gabriel.jpg/1280px-Tour_St._Gabriel.jpg", "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/2017-04_Mont_Saint-Michel_tour_Gabriel.jpg/1280px-2017-04_Mont_Saint-Michel_tour_Gabriel.jpg"], link: "http://www.le-mont-saint-michel.org/livre44.htm", sv: "https://www.google.com/maps/embed?pb=!4v1655199148806!6m8!1m7!1sKuzr8f0TKrQWqO6vbL-h1Q!2m2!1d48.6355481340211!2d-1.512753979157253!3f309.32094940965123!4f-0.4121877540006409!5f0.4000000000000002" },
+      { name: "Entrée du village", desc: "La porte du Roi, plus ancienne porte connue du Mont, autrefois gardée par un pont-levis. Passage vers le village médiéval avec ses habitations, commerces et restaurants.", images: ["https://i.imgur.com/WZuF4AD.jpg"], link: "https://www.ouest-france.fr/normandie/avranches-50300/le-mont-saint-michel-un-pont-levis-tout-neuf-la-porte-du-roy-1746751", sv: "https://www.google.com/maps/embed?pb=!4v1655199082953!6m8!1m7!1sLKgRx2jHNZw5S3L4vjr9bA!2m2!1d48.6349107403755!2d-1.511300663438078!3f357.5877745610605!4f18.23381824175752!5f1.1924812503605782" },
+      { name: "Les Cachots", desc: "Le Mont fut transformé en prison pour les prêtres réfractaires — 300 d'entre eux furent enfermés, libérés en 1799. Louis XI y installa des cages de fer lors de son règne.", images: ["https://i.imgur.com/T2vkXcf.jpg", "https://i.imgur.com/54N1TDN.jpg"], link: "https://www.messortiesculture.com/abbaye-du-mont-saint-michel-la-bastille-des-mers-et-ses-cachots-4310", sv: "https://www.google.com/maps/embed?pb=!4v1655199040068!6m8!1m7!1sNVDYfnNeoQsCm1ieorGrTA!2m2!1d48.63610979203278!2d-1.509590452260568!3f307.90401326111896!4f17.64794725134395!5f0.4000000000000002" },
+      { name: "Église Saint-Pierre", desc: "Édifice catholique à mi-chemin de la Grand'Rue, sanctuaire de pèlerinage depuis la fin du XIXe siècle. Le cimetière accueille la célèbre « Mère » Annette Poulard (1851–1931).", images: ["https://live.staticflickr.com/2211/32769440562_46208920fd_b.jpg", "https://i.imgur.com/sNmv7Xx.jpg", "https://i.imgur.com/IFj7XDC.jpg"], link: "https://fr.wikipedia.org/wiki/%C3%89glise_Saint-Pierre_du_Mont-Saint-Michel", sv: "https://www.google.com/maps/embed?pb=!4v1655198947246!6m8!1m7!1sEUCgkf1hjO1iKPNTOfbX9w!2m2!1d48.63618023139998!2d-1.510049960007308!3f198.13104756962224!4f10.148395186332621!5f0.4000000000000002" },
+      { name: "Logis Tiphaine", desc: "Demeure médiévale de Bertrand Du Guesclin, avec meubles authentiques du XIVe siècle et le cabinet d'astrologie de Tiphaine de Raguenel. Un voyage dans la vie d'un chevalier du Moyen-Âge.", images: ["https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Stone_houses_of_the_medieval_town_%28village%29_%2832080778114%29.jpg/1024px-Stone_houses_of_the_medieval_town_%28village%29_%2832080778114%29.jpg", "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Museum_at_the_Logis_Tiphaine_Raguenel_-_rear_facade.JPG/1024px-Museum_at_the_Logis_Tiphaine_Raguenel_-_rear_facade.JPG"], link: "https://www.ot-montsaintmichel.com/patrimoine-culturel/logis-tiphaine/", sv: "https://www.google.com/maps/embed?pb=!4v1655198877723!6m8!1m7!1sqqKP3L6kLTdYol2ZJWa3uw!2m2!1d48.63632178042539!2d-1.510066494526569!3f237.00469931493086!4f29.91013027779158!5f1.1924812503605782" },
+      { name: "Jardins de l'abbaye", desc: "Les moines s'y promenaient après la prière du matin. Potager d'époque et espace de contemplation, les jardins offrent une vue apaisante sur la baie.", images: ["https://upload.wikimedia.org/wikipedia/commons/5/50/Stone_houses_of_the_medieval_town_%28village%29_%2832080778114%29.jpg", "https://upload.wikimedia.org/wikipedia/commons/f/f2/Museum_at_the_Logis_Tiphaine_Raguenel_-_rear_facade.JPG"], link: "", sv: "https://www.google.com/maps/embed?pb=!4v1655198814344!6m8!1m7!1szAhFXyhYJts_PHTP2TDEIw!2m2!1d48.6365379958815!2d-1.510325359555935!3f260.4970568504929!4f16.288947022564955!5f1.1924812503605782" },
+      { name: "Tour du Nord & Remparts", desc: "La plus grande tour défensive, bâtie en 1254 pour impressionner les envahisseurs. Depuis la Guerre de Cent Ans, les remparts ont rendu l'abbaye imprenable.", images: ["https://i.imgur.com/J5Swk7c.jpg", "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Touristes_sur_la_Tour_du_Nord_%28Le_Mont-Saint-Michel%2C_Manche%2C_France%29.jpg/1024px-Touristes_sur_la_Tour_du_Nord_%28Le_Mont-Saint-Michel%2C_Manche%2C_France%29.jpg"], link: "https://fr.wikipedia.org/wiki/Fortifications_du_Mont-Saint-Michel#Tour_Nord", sv: "https://www.google.com/maps/embed?pb=!4v1655198749714!6m8!1m7!1sa11B6gQyapDB0vKC_7yLcA!2m2!1d48.6368388088701!2d-1.510407887100996!3f183.58109413419112!4f-8.18370535041339!5f1.1924812503605782" },
+      { name: "La Flèche & Statue dorée", desc: "Au sommet de la Merveille trône l'archange Saint-Michel terrassant le dragon. La statue dorée est visible à des kilomètres à la ronde et donne son nom au Mont.", images: ["https://i.imgur.com/NPr1Lzb.jpg", "https://i.imgur.com/44g0CZH.jpg"], link: "https://www.wikimanche.fr/Statue_de_saint_Michel_terrassant_le_dragon", sv: "https://www.google.com/maps/embed?pb=!4v1655198599660!6m8!1m7!1sCAoSLEFGMVFpcFB5dVJNdElScE5XX0thb3FaTXlyMTQ2UVFuOGFNdU1QcjQ1X2dy!2m2!1d48.63577069999999!2d-1.512163!3f59.20082683829788!4f21.887854296426212!5f0.4010512882036798" },
+      { name: "La Merveille", desc: "Chef-d'œuvre de l'architecture gothique financé par Philippe-Auguste en 1204. Construit sur une pente rocheuse, ce bâtiment est le plus haut de l'abbaye — un exploit médiéval.", images: ["https://i.imgur.com/27fyXk9.jpg", "https://i.imgur.com/9ajPNUG.jpg"], link: "https://www.pariscityvision.com/fr/europe/france/mont-saint-michel/merveille", sv: "https://www.google.com/maps/embed?pb=!4v1655198483573!6m8!1m7!1sCAoSLEFGMVFpcE9sWjA5cU8tNUVyaTA4M1dLcmozN2xHVFdabEhLT2htRVRMZTdF!2m2!1d48.6359799!2d-1.5115523!3f69.20784354507654!4f24.377020844885635!5f0.7820865974627469" },
+      { name: "Cloître de l'abbaye", desc: "Situé au sommet de la Merveille, ce cloître aérien aux voûtes élégantes est l'un des plus beaux de France. Jardin, promenade et spiritualité au cœur du ciel.", images: ["https://i.imgur.com/sz9svj4.jpg", "https://i.imgur.com/vCEwWmG.jpg", "https://cdn.pixabay.com/photo/2015/04/15/11/28/mont-saint-michel-723647_1280.jpg", "https://live.staticflickr.com/65535/50273953286_767c02547b_b.jpg"], link: "https://fr.wikipedia.org/wiki/Abbaye_du_Mont-Saint-Michel#Clo%C3%AEtre_(1225-1228)", sv: "https://www.google.com/maps/embed?pb=!4v1655196650107!6m8!1m7!1sCAoSLEFGMVFpcE16amdQaC1DSlJ3T09jQzExeFZYUmtidzBER1V0ZlZiMWdadl9Z!2m2!1d48.6363023!2d-1.5116045!3f154.03811312029706!4f-6.97678046824106!5f0.7820865974627469" }
+    ];
+
+    let currentIndex = 0;
+
+    /* Build grid */
+    const grid = document.getElementById('js-grid');
+    LOCATIONS.forEach((loc, i) => {
+      const card = document.createElement('div');
+      card.className = 'vr-card';
+      card.innerHTML = `
+    <img src="${loc.images[0]}" alt="${loc.name}" loading="lazy">
+    <div class="vr-card__body">
+      <div class="vr-card__num">Lieu ${String(i + 1).padStart(2, '0')}</div>
+      <div class="vr-card__name">${loc.name}</div>
+      <div class="vr-card__desc">${loc.desc}</div>
+      <button class="vr-card__btn">Explorer →</button>
+    </div>`;
+      card.addEventListener('click', () => openModal(i));
+      grid.appendChild(card);
+    });
+
+    function openModal(index) {
+      currentIndex = index;
+      renderModal();
+      document.getElementById('js-modal-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('js-modal-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function navigate(dir) {
+      currentIndex = (currentIndex + dir + LOCATIONS.length) % LOCATIONS.length;
+      renderModal();
+    }
+
+    function renderModal() {
+      const loc = LOCATIONS[currentIndex];
+      document.getElementById('js-modal-num').textContent = `Lieu ${String(currentIndex + 1).padStart(2, '0')} / ${LOCATIONS.length}`;
+      document.getElementById('js-modal-title').textContent = loc.name;
+      document.getElementById('js-modal-desc').textContent = loc.desc;
+      const wiki = document.getElementById('js-wiki-link');
+      if (loc.link) { wiki.href = loc.link; wiki.style.display = ''; }
+      else { wiki.style.display = 'none'; }
+
+      const imgBox = document.getElementById('js-modal-images');
+      imgBox.querySelectorAll('img').forEach(e => e.remove());
+      const dots = document.getElementById('js-img-dots');
+      dots.innerHTML = '';
+
+      loc.images.forEach((src, i) => {
+        const img = document.createElement('img');
+        img.src = src; img.alt = loc.name;
+        if (i === 0) img.classList.add('active');
+        imgBox.insertBefore(img, dots);
+        if (loc.images.length > 1) {
+          const dot = document.createElement('div');
+          dot.className = 'img-dot' + (i === 0 ? ' active' : '');
+          dot.addEventListener('click', () => setImg(i));
+          dots.appendChild(dot);
+        }
+      });
+
+      document.getElementById('js-sv-btn').onclick = () => openSV(loc);
+    }
+
+    function setImg(i) {
+      document.querySelectorAll('#js-modal-images img').forEach((el, idx) => el.classList.toggle('active', idx === i));
+      document.querySelectorAll('.img-dot').forEach((el, idx) => el.classList.toggle('active', idx === i));
+    }
+
+    function openSV(loc) {
+      document.getElementById('js-sv-iframe').src = loc.sv;
+      document.getElementById('js-sv-title').textContent = loc.name + ' — Street View';
+      document.getElementById('js-sv-overlay').classList.add('open');
+    }
+    function closeSV() {
+      document.getElementById('js-sv-overlay').classList.remove('open');
+      document.getElementById('js-sv-iframe').src = '';
+    }
+
+    document.getElementById('js-modal-overlay').addEventListener('click', function (e) {
+      if (e.target === this) closeModal();
+    });
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('js-modal-overlay').classList.contains('open')) return;
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowLeft') navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
+    });
+  </script>
+    <script src="i18n.js"></script>
+</body>
+
+</html>
+

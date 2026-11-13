@@ -1,0 +1,1681 @@
+﻿<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Histoire — Mont-Saint-Michel</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&amp;family=Open+Sans:ital,wght@0,300;0,400;0,600;1,400&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #333333;
+            --bg2: #505050;
+            --orange: #ea5c0d;
+            --orange2: #b94503;
+            --accent: #f7af3e;
+
+            --text: rgba(255, 255, 255, .92);
+            --muted: rgba(255, 255, 255, .74);
+
+            --shadow: 0 18px 34px rgba(0, 0, 0, .35);
+            --r-lg: 18px;
+            --r-xl: 22px;
+
+            --max: 1200px;
+
+            --orange-principal: #ea5c0d;
+            --orange-fonce: #b94503;
+            --orange-clair: #f7af3e;
+            --gris-fonce: #333333;
+            --gris-moyen: #505050;
+            --blanc: #ffffff;
+            --font-titre: 'Oswald', sans-serif;
+            --font-texte: 'Open Sans', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        a {
+
+            label {
+                text-decoration: none;
+            }
+
+            a:hover,
+            label:hover {
+                text-decoration: none;
+            }
+
+            color: inherit;
+
+            label {
+                text-decoration: none;
+            }
+
+            a:hover,
+            label:hover {
+                text-decoration: none;
+            }
+
+            text-decoration: none;
+
+            label {
+                text-decoration: none;
+            }
+
+            a:hover,
+            label:hover {
+                text-decoration: none;
+            }
+        }
+
+        label {
+            text-decoration: none;
+        }
+
+        a:hover,
+        label:hover {
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        .container {
+            width: min(var(--max), calc(100% - 80px));
+            margin: 0 auto;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-top {
+            background-color: var(--orange-principal);
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-image {
+            width: 50px;
+            height: 50px;
+        }
+
+        .language-selector {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #333333;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .language-selector svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .site-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        .site-title h1 {
+            font-family: var(--font-titre);
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #333333;
+            margin-bottom: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        .site-title p {
+            font-size: 0.95rem;
+            color: #333333;
+            font-weight: 400;
+        }
+
+        /* Navigation */
+        .nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            background-color: #3d3d3d;
+            padding: 15px 40px;
+        }
+
+        .nav-link {
+            padding: 10px 25px;
+            font-family: var(--font-texte);
+            font-weight: 500;
+            font-size: 1rem;
+            color: #333333;
+            background-color: var(--orange-clair);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            background-color: var(--orange-principal);
+            color: var(--blanc);
+        }
+
+        .nav-link.no-bg {
+            background-color: transparent;
+            color: var(--orange-clair);
+        }
+
+        .nav-link.no-bg:hover {
+            color: var(--blanc);
+        }
+
+        /* ===== Hero ===== */
+        .page-hero {
+            padding: 40px 0 10px;
+        }
+
+        .page-hero h2 {
+            margin: 0 0 10px;
+            font-size: 46px;
+            font-weight: 900;
+            letter-spacing: .2px;
+        }
+
+        .page-hero h2 span {
+            color: var(--orange);
+        }
+
+        .page-hero p {
+            margin: 0;
+            max-width: 820px;
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 18px;
+        }
+
+        /* ===== Timeline ===== */
+        .timeline {
+            position: relative;
+            padding: 50px 0 80px;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            transform: translateX(-50%);
+            background: linear-gradient(to bottom,
+                    rgba(234, 92, 13, 0),
+                    rgba(234, 92, 13, .55),
+                    rgba(234, 92, 13, 0));
+        }
+
+        .t-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: center;
+            margin: 0 0 90px;
+            position: relative;
+        }
+
+        .t-item::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--orange);
+            box-shadow: 0 0 0 6px rgba(234, 92, 13, .15);
+        }
+
+        .t-content {
+            padding: 0 10px;
+        }
+
+        .t-year {
+            font-weight: 900;
+            font-size: 92px;
+            line-height: .9;
+            color: rgba(234, 92, 13, .16);
+            margin: 0 0 14px;
+            letter-spacing: 1px;
+        }
+
+        .t-title {
+            margin: 0 0 12px;
+            font-size: 34px;
+            font-weight: 900;
+        }
+
+        .t-text {
+            margin: 0;
+            color: rgba(255, 255, 255, .78);
+            line-height: 1.8;
+            font-size: 16px;
+            max-width: 560px;
+        }
+
+        .fact {
+            margin-top: 18px;
+            background: var(--bg2);
+            border-left: 4px solid var(--accent);
+            border-radius: 14px;
+            padding: 16px 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            max-width: 620px;
+        }
+
+        .fact .icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(247, 175, 62, .20);
+            display: grid;
+            place-items: center;
+            flex: 0 0 auto;
+            font-size: 18px;
+        }
+
+        .fact h4 {
+            margin: 0 0 4px;
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: .2px;
+        }
+
+        .fact p {
+            margin: 0;
+            color: rgba(255, 255, 255, .70);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .t-media {
+
+            label {
+                text-decoration: none;
+            }
+
+            a:hover,
+            label:hover {
+                text-decoration: none;
+            }
+
+            position: relative;
+
+            label {
+                text-decoration: none;
+            }
+
+            a:hover,
+            label:hover {
+                text-decoration: none;
+            }
+
+            display: flex;
+
+            label {
+                text-decoration: none;
+            }
+
+            a:hover,
+            label:hover {
+                text-decoration: none;
+            }
+
+            justify-content: center;
+
+            label {
+                text-decoration: none;
+            }
+
+            a:hover,
+            label:hover {
+                text-decoration: none;
+            }
+        }
+
+        label {
+            text-decoration: none;
+        }
+
+        a:hover,
+        label:hover {
+            text-decoration: none;
+        }
+
+        .t-img {
+            width: min(520px, 100%);
+            border-radius: var(--r-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background: #222;
+        }
+
+        .t-img img {
+            width: 100%;
+            height: 340px;
+            object-fit: cover;
+        }
+
+        .badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: var(--orange);
+            color: #fff;
+            font-weight: 900;
+            padding: 8px 12px;
+            border-radius: 10px;
+            letter-spacing: .5px;
+            font-size: 14px;
+        }
+
+        .t-item.reverse .t-content {
+            order: 2;
+        }
+
+        .t-item.reverse .t-media {
+
+            label {
+                text-decoration: none;
+            }
+
+            a:hover,
+            label:hover {
+                text-decoration: none;
+            }
+
+            order: 1;
+
+            label {
+                text-decoration: none;
+            }
+
+            a:hover,
+            label:hover {
+                text-decoration: none;
+            }
+        }
+
+        label {
+            text-decoration: none;
+        }
+
+        a:hover,
+        label:hover {
+            text-decoration: none;
+        }
+
+        /* Item sans grosse date */
+        .t-item.no-year .t-year {
+            display: none;
+        }
+
+        .t-item.no-year::after {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 980px) {
+            .container {
+                width: min(var(--max), calc(100% - 28px));
+            }
+
+            .timeline::before {
+                display: none;
+            }
+
+            .t-item {
+                grid-template-columns: 1fr;
+                gap: 18px;
+                margin-bottom: 60px;
+            }
+
+            .t-item::after {
+                display: none;
+            }
+
+            .t-year {
+                font-size: 70px;
+            }
+
+            .t-img img {
+                height: 260px;
+            }
+
+            .pill,
+            .navlink,
+            .btn-accueil {
+                font-size: 18px;
+            }
+
+            .page-hero h2 {
+                font-size: 38px;
+            }
+        }
+
+        /* === Accessibilité (sans JS) : Daltoniens + menu langue === */
+        .theme-radio {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+        }
+
+        .theme-switch {
+            position: absolute;
+            right: 22px;
+            top: 18px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .theme-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: .95rem;
+            cursor: pointer;
+            user-select: none;
+            border: 2px solid rgba(0, 0, 0, .25);
+            background: rgba(255, 255, 255, .18);
+            color: #222;
+            transition: all .2s ease;
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-1px);
+            background: rgba(255, 255, 255, .28);
+        }
+
+        #theme-default:checked~.app .theme-switch label[for="theme-default"],
+        #theme-cb:checked~.app .theme-switch label[for="theme-cb"] {
+            background: rgba(0, 0, 0, .22);
+            color: #fff;
+            border-color: rgba(0, 0, 0, .35);
+        }
+
+        #theme-cb:checked~.app {
+            --orange-principal: #1F6FEB;
+            --orange-fonce: #0B3D91;
+            --orange-clair: #FFD500;
+            --gris-fonce: #1f1f1f;
+            --gris-moyen: #444444;
+            --blanc: #ffffff;
+        }
+
+        #theme-cb:checked~.app a:focus,
+        #theme-cb:checked~.app button:focus,
+        #theme-cb:checked~.app label:focus {
+            outline: 3px solid var(--orange-clair);
+            outline-offset: 3px;
+        }
+
+        .lang {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lang-toggle {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+        }
+
+        .language-selector {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #333;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 10px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .10);
+            border: 2px solid rgba(0, 0, 0, .12);
+        }
+
+        .language-selector:hover {
+            background: rgba(255, 255, 255, .18);
+        }
+
+        .lang-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            min-width: 180px;
+            background: rgba(30, 30, 30, .96);
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .35);
+            display: none;
+            z-index: 3000;
+        }
+
+        .lang-menu a {
+            display: block;
+            padding: 12px 14px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .lang-menu a:hover {
+            background: rgba(234, 92, 13, .18);
+        }
+
+        .lang-toggle:checked~.lang-menu {
+            display: block;
+        }
+
+        .header,
+        header {
+            width: 100%;
+        }
+
+        .header-top {
+            width: 100%;
+            margin: 0;
+        }
+
+        @media (max-width:768px) {
+            .theme-switch {
+                right: 12px;
+                top: 12px;
+                gap: 8px;
+            }
+
+            .theme-btn {
+                padding: 8px 10px;
+                font-size: .9rem;
+            }
+
+            .lang-menu {
+                right: 0;
+            }
+        }
+
+        /* ── Correctif RTL : theme-switch passe à gauche ── */
+        [dir="rtl"] .theme-switch {
+            right: auto;
+            left: 22px;
+        }
+
+        @media (max-width: 768px) {
+            [dir="rtl"] .theme-switch {
+                right: auto;
+                left: 12px;
+            }
+        }    </style>
+</head>
+
+<body data-page="histoire"><input checked="" class="theme-radio" id="theme-default" name="theme" type="radio" />
+    <input class="theme-radio" id="theme-cb" name="theme" type="radio" />
+
+
+
+
+
+    <div class="app">
+        <header class="header">
+            <div class="header-top">
+                <div class="logo">
+                    <svg aria-hidden="true" class="logo-image" fill="#333333" viewBox="0 0 100 100">
+                        <path
+                            d="M50 10 L55 20 L60 25 L58 30 L62 35 L60 40 L65 42 L63 47 L68 48 L66 53 L70 54 L68 58 L72 59 L70 63 L75 64 L50 70 L25 64 L30 63 L28 59 L32 58 L30 54 L34 53 L32 48 L37 47 L35 42 L40 40 L38 35 L42 30 L40 25 L45 20 Z">
+                        </path>
+                        <rect fill="#333333" height="5" width="60" x="20" y="70"></rect>
+                        <polygon fill="var(--orange-principal)" points="50,15 52,18 48,18"></polygon>
+                    </svg>
+                    <div class="lang">
+                        <input class="lang-toggle" id="lang-toggle-histoire-fr" type="checkbox" />
+                        <label class="language-selector" for="lang-toggle-histoire-fr">
+                            <span class="lang-current">Français</span>
+                            <svg aria-hidden="true" fill="currentColor" style="width:12px;height:12px;"
+                                viewBox="0 0 12 12">
+                                <path d="M6 9L1 4h10z"></path>
+                            </svg>
+                        </label>
+                        <div aria-label="Choix de langue" class="lang-menu" role="menu">
+                            <a href="#" role="menuitem" data-set-lang="fr">Français</a>
+                            <a href="#" role="menuitem" data-set-lang="en">English</a>
+                            <a href="#" role="menuitem" data-set-lang="ar">العربية</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="site-title">
+                    <h1 data-i18n="site.title">Le Mont-Saint-Michel</h1>
+                    <p data-i18n="site.subtitle">Patrimoine mondial de l'humanité</p>
+                </div>
+                <div aria-hidden="true" class="right-spacer"></div>
+                <div aria-label="Accessibilité daltoniens" class="theme-switch">
+                    <label class="theme-btn" for="theme-default"><span data-i18n="theme.normal">Normal</span></label>
+                    <label class="theme-btn" for="theme-cb"><span data-i18n="theme.colorblind">Daltoniens</span></label>
+                </div>
+            </div>
+            <nav aria-label="Navigation principale" class="nav"><a class="nav-link" href="index.html" data-nav="index" data-i18n="nav.home">Accueil</a><a
+                    class="nav-link" href="histoire.html">Histoire</a><a class="nav-link"
+                    href="architecture.html">Architecture</a><a class="nav-link" href="infos-pratiques.html" data-nav="infos" data-i18n="nav.practical">Infos Pratiques</a><a class="nav-link no-bg" href="parcours.html" data-nav="parcours" data-i18n="nav.route">Parcours</a></nav>
+        </header>
+        <!-- Header -->
+        <main class="container">
+            <section class="page-hero">
+                <h2>Frise <span>chronologique</span> </h2>
+                <p>
+                    Des origines du rocher aux grands chantiers modernes, voici une chronologie détaillée
+                    et ordonnée des événements majeurs qui ont façonné le Mont-Saint-Michel.
+                </p>
+            </section>
+            <section aria-label="Frise chronologique du Mont-Saint-Michel" class="timeline">
+                <!-- 1 -->
+                <article class="t-item no-year">
+                    <div class="t-content">
+                        <h3 class="t-title">Introduction</h3>
+                        <p class="t-text">
+                            Le Mont-Saint-Michel est un îlot rocheux au cœur d’une baie soumise à de puissantes marées.
+                            Au fil des siècles, il devient un sanctuaire, puis une grande abbaye, une forteresse,
+                            une prison… avant d’être reconnu mondialement.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Vue aérienne du Mont-Saint-Michel"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Saint-Michel_vu_du_ciel.jpg" />
+                        </div>
+                    </div>
+                </article>
+                <!-- 2 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">VIe–VIIe</div>
+                        <h3 class="t-title">Le « Mont Tombe »</h3>
+                        <p class="t-text">
+                            Avant l’abbaye, le rocher est déjà connu localement sous le nom de « Mont Tombe ».
+                            L’endroit attire par sa position unique entre terre et mer.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Le Mont dans sa baie"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/MtStMichel_avion.jpg" />
+                        </div>
+                        <div class="badge">VIe–VIIe</div>
+                    </div>
+                </article>
+                <!-- 3 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">708</div>
+                        <h3 class="t-title">La vision de l’évêque Aubert</h3>
+                        <p class="t-text">
+                            Selon la légende, l’archange Michel apparaît à Aubert (évêque d’Avranches) et demande
+                            la construction d’un sanctuaire sur le rocher.
+                        </p>
+                        <div class="fact">
+                            <div class="icon">💡</div>
+                            <div>
+                                <h4>Le saviez-vous ?</h4>
+                                <p>La tradition associe cet épisode à la naissance du sanctuaire dédié à saint Michel.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="708 - Origines du sanctuaire"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Saint-Michel_vu_du_ciel.jpg" />
+                        </div>
+                        <div class="badge">708</div>
+                    </div>
+                </article>
+                <!-- 4 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">IXe</div>
+                        <h3 class="t-title">Premiers bâtiments carolingiens</h3>
+                        <p class="t-text">
+                            À l’époque carolingienne, le sanctuaire s’organise : bâtiments et espaces religieux
+                            se structurent progressivement autour du culte.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Baie du Mont-Saint-Michel"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/View_from_Mont_Saint-Michel.jpg" />
+                        </div>
+                        <div class="badge">IXe</div>
+                    </div>
+                </article>
+                <!-- 5 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">966</div>
+                        <h3 class="t-title">Arrivée des bénédictins</h3>
+                        <p class="t-text">
+                            Installation d’une communauté bénédictine : c’est le début de la grande histoire monastique
+                            du
+                            Mont.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Cloître - vie monastique"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Saint-Michel%2C_Cloister.JPG" />
+                        </div>
+                        <div class="badge">966</div>
+                    </div>
+                </article>
+                <!-- 6 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">~900–Xe</div>
+                        <h3 class="t-title">Notre-Dame-sous-Terre</h3>
+                        <p class="t-text">
+                            La chapelle « Notre-Dame-sous-Terre » témoigne des premières phases architecturales
+                            conservées,
+                            aujourd’hui enchâssées dans les constructions plus tardives.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Intérieur de l'abbaye"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/The_interior_of_the_refectory_of_the_Abbey_of_Mont-Saint-Michel.jpg" />
+                        </div>
+                        <div class="badge">~900–Xe</div>
+                    </div>
+                </article>
+                <!-- 7 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">1023</div>
+                        <h3 class="t-title">Grand chantier de l’église romane</h3>
+                        <p class="t-text">
+                            Début de la grande église abbatiale romane : il faut construire sur un sommet étroit,
+                            en créant des cryptes et soubassements massifs.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="1023 - chantier roman"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Saint-Michel_vu_du_ciel.jpg" />
+                        </div>
+                        <div class="badge">1023</div>
+                    </div>
+                </article>
+                <!-- 8 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">1031–1047</div>
+                        <h3 class="t-title">Cryptes de fondation</h3>
+                        <p class="t-text">
+                            Plusieurs cryptes et chapelles de soubassement sont édifiées pour soutenir les parties
+                            hautes
+                            de l’église et stabiliser l’ensemble.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Architecture de l'abbaye"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Saint-Michel%2C_Cloister.JPG" />
+                        </div>
+                        <div class="badge">1031–1047</div>
+                    </div>
+                </article>
+                <!-- 9 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">1048–1090</div>
+                        <h3 class="t-title">Nef romane</h3>
+                        <p class="t-text">
+                            La nef romane se développe : l’abbatiale prend une ampleur exceptionnelle, au prix d’un défi
+                            technique permanent sur un rocher escarpé.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Nef romane - époque médiévale"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Saint-Michel_vu_du_ciel.jpg" />
+                        </div>
+                        <div class="badge">1048–1090</div>
+                    </div>
+                </article>
+                <!-- 10 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">XIe–XIIe</div>
+                        <h3 class="t-title">Âge d’or des pèlerinages</h3>
+                        <p class="t-text">
+                            Le Mont s’impose comme grand lieu de pèlerinage médiéval. Le village se développe à l’ombre
+                            des murs et des activités monastiques.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Village du Mont-Saint-Michel"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/View_of_Buildings_in_Mont_Saint-Michel_26.jpg" />
+                        </div>
+                        <div class="badge">XIe–XIIe</div>
+                    </div>
+                </article>
+                <!-- 11 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">1154–1164</div>
+                        <h3 class="t-title">Robert de Torigni réorganise l’abbaye</h3>
+                        <p class="t-text">
+                            L’abbé Robert de Torigni fait édifier de nouveaux bâtiments (logis, hôtellerie, infirmerie…)
+                            et réorganise les circulations pour séparer pèlerins et moines.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="1154 - bâtiments monastiques"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Saint-Michel%2C_Cloister.JPG" />
+                        </div>
+                        <div class="badge">1154–1164</div>
+                    </div>
+                </article>
+                <!-- 12 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">1204</div>
+                        <h3 class="t-title">Incendie et bascule politique</h3>
+                        <p class="t-text">
+                            Un incendie endommage une partie du Mont. L’épisode ouvre une phase de reconstruction
+                            et de transformations majeures.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="1204 - reconstruction"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont_st_michel_aerial.jpg" />
+                        </div>
+                        <div class="badge">1204</div>
+                    </div>
+                </article>
+                <!-- 13 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">1211</div>
+                        <h3 class="t-title">Début du chantier de « La Merveille »</h3>
+                        <p class="t-text">
+                            Démarrage de la construction de l’ensemble gothique sur trois niveaux au nord de
+                            l’abbatiale,
+                            destiné à accueillir fonctions monastiques et hospitalité.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="La Merveille - réfectoire"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/The_interior_of_the_refectory_of_the_Abbey_of_Mont-Saint-Michel.jpg" />
+                        </div>
+                        <div class="badge">1211</div>
+                    </div>
+                </article>
+                <!-- 14 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">1228</div>
+                        <h3 class="t-title">Achèvement de « La Merveille »</h3>
+                        <p class="t-text">
+                            La Merveille est achevée : cloître suspendu, réfectoire, salle des hôtes, salle des
+                            chevaliers…
+                            Un sommet de l’architecture gothique normande.
+                        </p>
+                        <div class="fact">
+                            <div class="icon">💡</div>
+                            <div>
+                                <h4>Le saviez-vous ?</h4>
+                                <p>Le cloître possède une disposition en quinconce qui crée un rythme visuel très
+                                    singulier.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="1228 - cloître"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Saint-Michel%2C_Cloister.JPG" />
+                        </div>
+                        <div class="badge">1228</div>
+                    </div>
+                </article>
+                <!-- 15 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">XIIIe</div>
+                        <h3 class="t-title">Fortifications et remparts</h3>
+                        <p class="t-text">
+                            Le Mont renforce ses défenses (enceintes, tours, accès) pour protéger l’abbaye, le village
+                            et les flux de pèlerins face aux menaces.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Remparts du Mont"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont_saint_michel.jpg" />
+                        </div>
+                        <div class="badge">XIIIe</div>
+                    </div>
+                </article>
+                <!-- 16 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">1337</div>
+                        <h3 class="t-title">Début de la guerre de Cent Ans</h3>
+                        <p class="t-text">
+                            Le Mont devient une place stratégique. Sa situation et ses défenses en font un symbole de
+                            résistance,
+                            capable de tenir malgré les pressions militaires.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="1337 - forteresse"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont_st_michel_aerial.jpg" />
+                        </div>
+                        <div class="badge">1337</div>
+                    </div>
+                </article>
+                <!-- 17 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">1421</div>
+                        <h3 class="t-title">Effondrement du chœur roman</h3>
+                        <p class="t-text">
+                            Le chœur roman s’effondre en pleine période de troubles. La reconstruction prendra du temps
+                            et donnera naissance à un chœur gothique flamboyant.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="1421 - effondrement"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Saint-Michel_vu_du_ciel.jpg" />
+                        </div>
+                        <div class="badge">1421</div>
+                    </div>
+                </article>
+                <!-- 18 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">1424–1450</div>
+                        <h3 class="t-title">Sièges et résistance</h3>
+                        <p class="t-text">
+                            Le Mont résiste aux tentatives d’encerclement et d’assaut. L’image du Mont-forteresse
+                            s’inscrit durablement dans l’histoire.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="1424-1450 - résistance"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont_saint_michel.jpg" />
+                        </div>
+                        <div class="badge">1424–1450</div>
+                    </div>
+                </article>
+                <!-- 19 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">1446–1450</div>
+                        <h3 class="t-title">Crypte des Gros Piliers</h3>
+                        <p class="t-text">
+                            Une crypte très massive est réalisée pour refonder et stabiliser la zone du chœur
+                            après les fragilités structurelles.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Crypte / réfectoire - abbaye"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/MtStMichel2.jpg" />
+                        </div>
+                        <div class="badge">1446–1450</div>
+                    </div>
+                </article>
+                <!-- 20 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">1450–1521</div>
+                        <h3 class="t-title">Le chœur gothique flamboyant</h3>
+                        <p class="t-text">
+                            Reconstruction complète dans un style gothique flamboyant : grandes ouvertures,
+                            verticalité, lumière. Le contraste avec la nef romane rend l’ensemble unique.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Gothique flamboyant"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Saint-Michel%2C_Cloister.JPG" />
+                        </div>
+                        <div class="badge">1450–1521</div>
+                    </div>
+                </article>
+                <!-- 21 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">XVIe</div>
+                        <h3 class="t-title">Temps troublés et adaptation</h3>
+                        <p class="t-text">
+                            Comme beaucoup de lieux religieux, le Mont traverse des périodes difficiles (tensions
+                            politiques,
+                            mutations religieuses). Les usages évoluent, le site s’adapte.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="XVIe siècle - Mont et baie"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont_st_michel_aerial.jpg" />
+                        </div>
+                        <div class="badge">XVIe</div>
+                    </div>
+                </article>
+                <!-- 22 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">1622</div>
+                        <h3 class="t-title">Réforme de Saint-Maur</h3>
+                        <p class="t-text">
+                            Une réforme monastique vise à restaurer discipline et organisation religieuse.
+                            L’abbaye poursuit sa vie spirituelle malgré les transformations de l’époque moderne.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="1622 - réforme"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Saint-Michel%2C_Cloister.JPG" />
+                        </div>
+                        <div class="badge">1622</div>
+                    </div>
+                </article>
+                <!-- 23 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">XVIIe–XVIIIe</div>
+                        <h3 class="t-title">Déclin relatif et entretien</h3>
+                        <p class="t-text">
+                            Le Mont reste un lieu majeur, mais connaît aussi des phases de ralentissement.
+                            Les bâtiments demandent un entretien constant dans un environnement marin exigeant.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="XVIIe-XVIIIe - baie"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/View_from_Mont_Saint-Michel.jpg" />
+                        </div>
+                        <div class="badge">XVIIe–XVIIIe</div>
+                    </div>
+                </article>
+                <!-- 24 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">1789</div>
+                        <h3 class="t-title">Révolution française</h3>
+                        <p class="t-text">
+                            Les bouleversements révolutionnaires mettent fin à l’organisation monastique traditionnelle.
+                            Le Mont change de statut et de fonction.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="1789 - révolution"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont_saint_michel.jpg" />
+                        </div>
+                        <div class="badge">1789</div>
+                    </div>
+                </article>
+                <!-- 25 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">1791</div>
+                        <h3 class="t-title">Départ des derniers moines</h3>
+                        <p class="t-text">
+                            Les moines quittent l’abbaye. Le Mont devient propriété nationale : une nouvelle page
+                            s’ouvre,
+                            loin de sa vocation monastique originelle.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="1791 - départ des moines"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Saint-Michel_vu_du_ciel.jpg" />
+                        </div>
+                        <div class="badge">1791</div>
+                    </div>
+                </article>
+                <!-- 26 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">1792–1863</div>
+                        <h3 class="t-title">Le Mont devient une prison</h3>
+                        <p class="t-text">
+                            L’abbaye est convertie en maison de détention : cellules, surveillances, aménagements.
+                            Le site est parfois surnommé « la Bastille des mers ».
+                        </p>
+                        <div class="fact">
+                            <div class="icon">💡</div>
+                            <div>
+                                <h4>Détail marquant</h4>
+                                <p>Des aménagements spécifiques apparaissent pour la logistique (ravitaillement,
+                                    ateliers…).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Cage à écureuil - période prison"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Cage_%C3%A0_%C3%A9cureuil_%28Mont-Saint-Michel%29.jpg" />
+                        </div>
+                        <div class="badge">1792–1863</div>
+                    </div>
+                </article>
+                <!-- 27 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">1830–1844</div>
+                        <h3 class="t-title">Prisonniers politiques</h3>
+                        <p class="t-text">
+                            Une partie des détenus sont des prisonniers politiques. L’aspect du monument-prison
+                            choque de nombreux intellectuels et défenseurs du patrimoine.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Prisonniers politiques - XIXe siècle"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont_saint_michel.jpg" />
+                        </div>
+                        <div class="badge">1830–1844</div>
+                    </div>
+                </article>
+                <!-- 28 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">1863</div>
+                        <h3 class="t-title">Fermeture de la prison</h3>
+                        <p class="t-text">
+                            La prison ferme. Le Mont peut enfin être restauré et revalorisé comme monument historique,
+                            en réponse aux mobilisations patrimoniales.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="1863 - fermeture de la prison"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont-Saint-Michel_vu_du_ciel.jpg" />
+                        </div>
+                        <div class="badge">1863</div>
+                    </div>
+                </article>
+                <!-- 29 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">1864</div>
+                        <h3 class="t-title">Ouverture au public et restaurations</h3>
+                        <p class="t-text">
+                            Début d’une nouvelle période : restauration progressive, mise en valeur,
+                            et retour d’un tourisme culturel durable.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="1864 - restauration"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/The_interior_of_the_refectory_of_the_Abbey_of_Mont-Saint-Michel.jpg" />
+                        </div>
+                        <div class="badge">1864</div>
+                    </div>
+                </article>
+                <!-- 30 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">1879</div>
+                        <h3 class="t-title">Construction de la digue-route</h3>
+                        <p class="t-text">
+                            Une digue-route relie durablement le Mont au continent. Elle facilite l’accès,
+                            mais accélère aussi l’ensablement autour du site.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Digue-route / accès au Mont"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont_Saint-Michel_20060330.JPG" />
+                        </div>
+                        <div class="badge">1879</div>
+                    </div>
+                </article>
+                <!-- 31 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">1897</div>
+                        <h3 class="t-title">L’archange au sommet</h3>
+                        <p class="t-text">
+                            La silhouette du Mont est marquée par la flèche et la statue de saint Michel terrassant le
+                            dragon,
+                            qui achève l’image iconique du monument.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Statue de Saint Michel - 1897"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/MontStMichel-StatueFremiet.jpg" />
+                        </div>
+                        <div class="badge">1897</div>
+                    </div>
+                </article>
+                <!-- 32 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">1901–1938</div>
+                        <h3 class="t-title">Ligne touristique (tram/train)</h3>
+                        <p class="t-text">
+                            Une ligne à vocation touristique relie Pontorson au Mont : elle renforce l’accessibilité
+                            et accompagne l’essor du tourisme.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Accès au Mont (époque tourisme)"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Mont_Saint-Michel_20060330.JPG" />
+                        </div>
+                        <div class="badge">1901–1938</div>
+                    </div>
+                </article>
+                <!-- 33 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">1979</div>
+                        <h3 class="t-title">Inscription au patrimoine mondial (UNESCO)</h3>
+                        <p class="t-text">
+                            Le Mont-Saint-Michel et sa baie sont reconnus pour leur valeur universelle exceptionnelle.
+                            Le site devient une référence mondiale du patrimoine culturel et paysager.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="UNESCO - Mont et baie"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/MtStMichel_avion.jpg" />
+                        </div>
+                        <div class="badge">1979</div>
+                    </div>
+                </article>
+                <!-- 34 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">1995</div>
+                        <h3 class="t-title">Lancement du projet « caractère maritime »</h3>
+                        <p class="t-text">
+                            Un grand programme est engagé pour lutter contre l’ensablement, repenser l’accès,
+                            et rendre au Mont son insularité lors des grandes marées.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Baie du Mont-Saint-Michel"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Bay_of_Mont-Saint-Michel.jpg" />
+                        </div>
+                        <div class="badge">1995</div>
+                    </div>
+                </article>
+                <!-- 35 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">2006</div>
+                        <h3 class="t-title">Grand chantier hydraulique (barrage, aménagements)</h3>
+                        <p class="t-text">
+                            Le chantier moderne s’intensifie : l’objectif est de « chasser » les sédiments,
+                            améliorer les circulations et limiter l’impact des parkings.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="Travaux et baie"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/Travers%C3%A9e_de_la_baie_du_Mont_Saint_Michel%2C_vue_de_la_tour_nord.JPG" />
+                        </div>
+                        <div class="badge">2006</div>
+                    </div>
+                </article>
+                <!-- 36 -->
+                <article class="t-item reverse">
+                    <div class="t-content">
+                        <div class="t-year">2015</div>
+                        <h3 class="t-title">Le Mont redevient (vraiment) une île</h3>
+                        <p class="t-text">
+                            Grâce au barrage et à la nouvelle passerelle, le Mont peut à nouveau être entouré par la mer
+                            lors des grandes marées : l’insularité est restaurée.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="2015 - grandes marées et passerelle"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/March_2015_equinox_spring_tide_at_Mont_Saint-Michel-7.jpg" />
+                        </div>
+                        <div class="badge">2015</div>
+                    </div>
+                </article>
+                <!-- 37 -->
+                <article class="t-item">
+                    <div class="t-content">
+                        <div class="t-year">2016</div>
+                        <h3 class="t-title">Restauration de la statue de l’archange</h3>
+                        <p class="t-text">
+                            La statue de saint Michel est déposée temporairement pour restauration :
+                            entretien du patrimoine, dorure et conservation à long terme.
+                        </p>
+                    </div>
+                    <div class="t-media">
+                        <div class="t-img">
+                            <img alt="2016 - restauration de la statue"
+                                src="https://commons.wikimedia.org/wiki/Special:FilePath/MontStMichel-StatueFremiet.jpg" />
+                        </div>
+                        <div class="badge">2016</div>
+                    </div>
+                </article>
+            </section>
+        </main>
+    </div>
+    <script src="i18n.js"></script>
+
+    <!-- ===== NARRATION VOCALE ===== -->
+    <style>
+        /* Barre de contrôle flottante */
+        #narration-bar {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(20, 20, 20, .92);
+            border: 1px solid rgba(234, 92, 13, .4);
+            border-radius: 50px;
+            padding: 10px 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,.5);
+            backdrop-filter: blur(10px);
+            font-family: 'Open Sans', sans-serif;
+            color: #fff;
+            font-size: 14px;
+            user-select: none;
+        }
+        #narration-bar button {
+            background: var(--orange, #ea5c0d);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            color: #fff;
+            font-size: 18px;
+            transition: background .2s, transform .15s;
+            flex: 0 0 auto;
+        }
+        #narration-bar button:hover { background: #b94503; transform: scale(1.08); }
+        #narration-bar button:disabled { background: #555; cursor: not-allowed; transform: none; }
+        #narr-label {
+            max-width: 260px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: rgba(255,255,255,.75);
+            font-size: 13px;
+        }
+        #narr-speed {
+            background: rgba(255,255,255,.1);
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 8px;
+            color: #fff;
+            padding: 4px 8px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        #narr-speed option { background: #222; color: #fff; }
+
+        /* Item actif pendant la narration */
+        .t-item.narrating {
+            outline: 3px solid rgba(234, 92, 13, .7);
+            outline-offset: 14px;
+            border-radius: 8px;
+            transition: outline .3s;
+        }
+        .t-item.narrating .t-year { color: rgba(234, 92, 13, .45); }
+
+        /* Ondulation sur le point de la timeline */
+        .t-item.narrating::after {
+            background: var(--orange, #ea5c0d) !important;
+            box-shadow: 0 0 0 12px rgba(234,92,13,.25), 0 0 0 24px rgba(234,92,13,.1) !important;
+            animation: pulse-dot 1s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%,100% { box-shadow: 0 0 0 6px rgba(234,92,13,.2); }
+            50%      { box-shadow: 0 0 0 14px rgba(234,92,13,.08); }
+        }
+    </style>
+
+    <div id="narration-bar">
+        <button id="narr-play"  title="Lancer la narration">▶</button>
+        <button id="narr-pause" title="Pause / Reprendre" disabled>⏸</button>
+        <button id="narr-stop"  title="Arrêter" disabled>⏹</button>
+        <span id="narr-label">Narration de l'histoire</span>
+        <select id="narr-speed" title="Vitesse de lecture">
+            <option value="0.75">×0.75</option>
+            <option value="0.9" >×0.9</option>
+            <option value="1"   selected>×1</option>
+            <option value="1.2" >×1.2</option>
+            <option value="1.5" >×1.5</option>
+        </select>
+    </div>
+
+    <script>
+    (function(){
+        if (!window.speechSynthesis) {
+            document.getElementById('narration-bar').innerHTML =
+                '<span style="color:#f7af3e">⚠ Narration vocale non supportée par ce navigateur.</span>';
+            return;
+        }
+
+        /* --- Collecte des données de chaque item --- */
+        const items = Array.from(document.querySelectorAll('.t-item'));
+        const scripts = items.map(el => {
+            const year  = (el.querySelector('.t-year')  || {}).textContent || '';
+            const title = (el.querySelector('.t-title') || {}).textContent || '';
+            const text  = (el.querySelector('.t-text')  || {}).textContent || '';
+            return { el, text: [year, title, text].filter(Boolean).join('. ') };
+        });
+
+        /* --- État --- */
+        let idx       = 0;
+        let playing   = false;
+        let paused    = false;
+        let cancelled = false;
+        let currentUtter = null;
+
+        /* --- Éléments UI --- */
+        const btnPlay  = document.getElementById('narr-play');
+        const btnPause = document.getElementById('narr-pause');
+        const btnStop  = document.getElementById('narr-stop');
+        const label    = document.getElementById('narr-label');
+        const speedSel = document.getElementById('narr-speed');
+
+        /* --- Mise à jour UI --- */
+        function updateUI() {
+            btnPlay.disabled  = playing && !paused;
+            btnPause.disabled = !playing;
+            btnStop.disabled  = !playing;
+            btnPause.textContent = paused ? '▶' : '⏸';
+            btnPause.title       = paused ? 'Reprendre' : 'Pause';
+        }
+
+        /* --- Scroll fluide vers un item --- */
+        function scrollTo(el) {
+            const top = el.getBoundingClientRect().top + window.scrollY - 100;
+            window.scrollTo({ top, behavior: 'smooth' });
+        }
+
+        /* --- Retire la mise en valeur de tous les items --- */
+        function clearHighlight() {
+            items.forEach(e => e.classList.remove('narrating'));
+        }
+
+        /* --- Lit un item puis passe au suivant --- */
+        function speakItem(i) {
+            if (i >= scripts.length || cancelled) {
+                stopNarration();
+                return;
+            }
+            idx = i;
+            const { el, text } = scripts[i];
+
+            clearHighlight();
+            el.classList.add('narrating');
+            scrollTo(el);
+
+            const title = (el.querySelector('.t-title')||{}).textContent || '';
+            const year  = (el.querySelector('.t-year') ||{}).textContent || '';
+            label.textContent = [year, title].filter(Boolean).join(' — ') || 'Narration…';
+
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang  = 'fr-FR';
+            utter.rate  = parseFloat(speedSel.value);
+            utter.pitch = 1;
+
+            utter.onend = () => {
+                if (!cancelled && !paused) {
+                    setTimeout(() => speakItem(i + 1), 600);
+                }
+            };
+            utter.onerror = () => {
+                if (!cancelled) speakItem(i + 1);
+            };
+
+            currentUtter = utter;
+            window.speechSynthesis.speak(utter);
+        }
+
+        /* --- Démarrer --- */
+        function startNarration(fromIdx) {
+            cancelled = false;
+            paused    = false;
+            playing   = true;
+            window.speechSynthesis.cancel();
+            updateUI();
+            speakItem(fromIdx);
+        }
+
+        /* --- Arrêter --- */
+        function stopNarration() {
+            cancelled = true;
+            playing   = false;
+            paused    = false;
+            window.speechSynthesis.cancel();
+            clearHighlight();
+            label.textContent = 'Narration terminée';
+            updateUI();
+            idx = 0;
+        }
+
+        /* --- Boutons --- */
+        btnPlay.addEventListener('click', () => {
+            if (paused) {
+                paused = false;
+                window.speechSynthesis.resume();
+                updateUI();
+            } else {
+                startNarration(0);
+            }
+        });
+
+        btnPause.addEventListener('click', () => {
+            if (!playing) return;
+            if (paused) {
+                paused = false;
+                window.speechSynthesis.resume();
+            } else {
+                paused = true;
+                window.speechSynthesis.pause();
+            }
+            updateUI();
+        });
+
+        btnStop.addEventListener('click', stopNarration);
+
+        /* Rechargement de la vitesse à la prochaine utterance (simple) */
+        speedSel.addEventListener('change', () => {
+            if (playing && !paused) {
+                const resumeIdx = idx;
+                cancelled = true;
+                window.speechSynthesis.cancel();
+                setTimeout(() => {
+                    cancelled = false;
+                    startNarration(resumeIdx);
+                }, 200);
+            }
+        });
+
+        /* Sécurité : certains navigateurs mettent la synthèse en pause après ~15 s */
+        setInterval(() => {
+            if (playing && !paused && window.speechSynthesis.speaking) {
+                window.speechSynthesis.resume();
+            }
+        }, 10000);
+    })();
+    </script>
+</body>
+
+</html>
+
